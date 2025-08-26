@@ -59,8 +59,8 @@ describe("Guess Function", () => {
 
     // This Test Case WILL fail for now.
     // However because this is minor rare quirk this will be put on the back burner
-    /*
-    it("should return false when given a substring", () => {
+
+    it.skip("should return false when given a substring", () => {
       const guess = `The image is the language Javascript`;
       const answer = "Java";
 
@@ -68,6 +68,5 @@ describe("Guess Function", () => {
 
       expect(result).toBe(false);
     });
-    */
   });
 });
