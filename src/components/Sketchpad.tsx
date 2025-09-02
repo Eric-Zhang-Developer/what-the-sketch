@@ -81,13 +81,16 @@ function Sketchpad(
 
   return (
     <>
-      <ReactSketchCanvas
-        className=""
-        height="400px"
-        strokeWidth={4}
-        strokeColor="black"
-        ref={canvasRef}
-      ></ReactSketchCanvas>
+      <div role="game">
+        <ReactSketchCanvas
+          className=""
+          height="400px"
+          strokeWidth={4}
+          strokeColor="black"
+          ref={canvasRef}
+        ></ReactSketchCanvas>
+      </div>
+
       <div className="flex flex-row gap-4">
         <button
           onClick={handleSubmit}
@@ -96,6 +99,7 @@ function Sketchpad(
           Submit Drawing
         </button>
         <button
+          aria-label="clear canvas"
           onClick={clearCanvas}
           className="bg-red-400 py-3 px-3 text-2xl text-white rounded-xl shadow-lg hover:cursor-pointer transition hover:scale-110"
         >

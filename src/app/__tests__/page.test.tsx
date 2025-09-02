@@ -28,3 +28,25 @@ describe("Lobby Tests", () => {
     expect(startGameButton).not.toBeInTheDocument();
   });
 });
+
+describe("Core Game Tests", () => {
+  it("should load all the game components when the game starts", async () => {
+    render(<Home></Home>);
+    const user = userEvent.setup();
+    const startGameButton = screen.getByText("Start Game!");
+
+    await user.click(startGameButton);
+
+    const prompt = await screen.findByLabelText("prompt");
+    const submitButton = await screen.findByText("Submit Drawing");
+    const clearCanvasButton = await screen.findByLabelText("clear canvas");
+
+    // Idk how robust this specific find is because it finds the div that the core canvas is wrapped in.
+    const canvas = await screen.findByRole("game");
+
+    expect(prompt).toBeInTheDocument();
+    expect(canvas).toBeInTheDocument();
+    expect(submitButton).toBeInTheDocument();
+    expect(clearCanvasButton).toBeInTheDocument();
+  });
+});

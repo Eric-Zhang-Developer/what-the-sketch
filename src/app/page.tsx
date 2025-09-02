@@ -63,7 +63,9 @@ export default function Home() {
     // TODO: Refactor Core Game into its own Component
     [GameState.Game]: (
       <div className="flex items-center justify-center flex-col gap-4 container mx-auto py-10">
-        <h1 className="text-5xl">Draw a {currentDrawingPrompt}</h1>
+        <h1 className="text-5xl" aria-label="prompt">
+          Draw a {currentDrawingPrompt}
+        </h1>
         <Sketchpad
           ref={sketchpadRef}
           setResponse={setResponse}
