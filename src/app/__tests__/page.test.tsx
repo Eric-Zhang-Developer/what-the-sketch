@@ -1,9 +1,41 @@
-import { describe, expect, it, afterEach } from "vitest";
+import { describe, expect, it, afterEach, vi } from "vitest";
 import Home from "../page";
 import { render, screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/vitest";
+
 afterEach(() => cleanup());
+
+// This catches all fetches and returns the hard coded response with a success and cat!
+vi.spyOn(globalThis, "fetch").mockImplementation((url) => {
+  console.log(`[MOCKING] Fetch called with URL: ${url}`);
+  const mockApiResponse = {
+    response: `This image is a **simple, hand-drawn illustration on a white background.** It features: * A **cartoon cat's head** drawn in black outline. 
+  The cat has two pointy ears, two vertical lines for eyes, and a "W" shape for its mouth. * To the right of the cat, the word **"Meow!"** is written 
+  in a casual, handwritten style.`,
+  };
+  return Promise.resolve(new Response(JSON.stringify(mockApiResponse), { status: 200 }));
+});
+
+// --- Mock Setup react-sketch-canvas ---
+// react-sketch-canvas acts extremely wonky in the test environment, this is the reason for the mock
+const mockCanvasControls = {
+  exportImage: vi.fn().mockResolvedValue("data:image/png;base64,MOCK"),
+  clearCanvas: vi.fn(),
+};
+
+vi.mock("react-sketch-canvas", async () => {
+  const React = await import("react");
+  const ReactSketchCanvas = React.forwardRef(function MockReactSketchCanvas(props: never, ref) {
+    React.useImperativeHandle(ref, () => mockCanvasControls);
+    return <div data-testid="mock-react-sketch-canvas">Mock Canvas</div>;
+  });
+
+  ReactSketchCanvas.displayName = "ReactSketchCanvas";
+  return { ReactSketchCanvas };
+});
+
+// --- Tests ---
 
 describe("Lobby Tests", () => {
   it("should load the lobby on initial page load", () => {
@@ -48,5 +80,39 @@ describe("Core Game Tests", () => {
     expect(canvas).toBeInTheDocument();
     expect(submitButton).toBeInTheDocument();
     expect(clearCanvasButton).toBeInTheDocument();
+  });
+
+  it("should display the turn result after submitting a drawing", async () => {
+    render(<Home></Home>);
+    const user = userEvent.setup();
+    const startGameButton = screen.getByText("Start Game!");
+
+    await user.click(startGameButton);
+    const submitButton = await screen.findByText("Submit Drawing");
+
+    await user.click(submitButton);
+    const response = await screen.findByText("cat", { exact: false });
+    const nextPromptButton = await screen.findByText("Next Prompt");
+
+    expect(response).toBeInTheDocument();
+    expect(nextPromptButton).toBeInTheDocument();
+  });
+
+  it("should not display the results section after the user clicks next prompt", async () => {
+    render(<Home></Home>);
+    const user = userEvent.setup();
+    const startGameButton = screen.getByText("Start Game!");
+
+    await user.click(startGameButton);
+    const submitButton = await screen.findByText("Submit Drawing");
+
+    await user.click(submitButton);
+    const response = await screen.findByText("cat", { exact: false });
+    const nextPromptButton = await screen.findByText("Next Prompt");
+
+    await user.click(nextPromptButton);
+
+    expect(response).not.toBeInTheDocument();
+    expect(nextPromptButton).not.toBeInTheDocument();
   });
 });
