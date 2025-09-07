@@ -1,21 +1,21 @@
 "use client";
 import Sketchpad from "@/components/Sketchpad";
 import TurnResultSection from "@/components/TurnResultSection";
-import { GuessState, SketchpadRef, TurnCycleState, GameState } from "@/utils/types";
+import { GuessState, SketchpadRef, TurnCycleState, GameState, HomeProps } from "@/utils/types";
 import { useEffect, useState, useRef } from "react";
 import { getRandomPrompt } from "@/utils/get-random-prompt";
 import Lobby from "@/components/Lobby";
 import GameResults from "@/components/GameResults";
 
-export default function Home() {
+export default function Home({ initialRoundNumber = 1, initialCorrectGuessNumber = 0 }: HomeProps) {
   const [response, setResponse] = useState<string>("");
   const [guessState, setGuessState] = useState<GuessState>(GuessState.Pending);
   const [gameState, setGameState] = useState<GameState>(GameState.Lobby);
   const [turnCycleState, setTurnCycleState] = useState<TurnCycleState>(TurnCycleState.Drawing);
   const [currentDrawingPrompt, setCurrentDrawingPrompt] = useState<string>("");
   const sketchpadRef = useRef<SketchpadRef>(null);
-  const [roundNumber, setRoundNumber] = useState(1);
-  const [correctGuesses, setCorrectGuesses] = useState(0);
+  const [roundNumber, setRoundNumber] = useState(initialRoundNumber);
+  const [correctGuesses, setCorrectGuesses] = useState(initialCorrectGuessNumber);
 
   // the image url processing happens entirely in Sketchpad. For now it is discarded after being given to the API. For future reference could save it.
 
@@ -37,7 +37,6 @@ export default function Home() {
     const nextRound = roundNumber + 1;
     setRoundNumber(nextRound);
     if (nextRound > 5) {
-      console.log("end Game!!");
       setGameState(GameState.Results);
     }
   };
@@ -63,7 +62,9 @@ export default function Home() {
     // TODO: Refactor Core Game into its own Component
     [GameState.Game]: (
       <div className="flex items-center justify-center flex-col gap-4 container mx-auto py-10">
-        <h1 className="text-5xl">Draw a {currentDrawingPrompt}</h1>
+        <h1 className="text-5xl" aria-label="prompt">
+          Draw a {currentDrawingPrompt}
+        </h1>
         <Sketchpad
           ref={sketchpadRef}
           setResponse={setResponse}
