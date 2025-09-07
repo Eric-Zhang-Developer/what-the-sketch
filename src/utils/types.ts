@@ -51,3 +51,8 @@ export interface GameResultsProps {
   correctGuesses: number;
   setCorrectGuesses: (correctGuesses: number) => void;
 }
+
+export interface HomeProps {
+  initialRoundNumber?: number;
+  initialCorrectGuessNumber?: number;
+}
