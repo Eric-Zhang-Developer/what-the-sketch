@@ -116,3 +116,48 @@ describe("Core Game Tests", () => {
     expect(nextPromptButton).not.toBeInTheDocument();
   });
 });
+
+describe("Results Screen Tests", () => {
+  it("should load the results screen after the last round", async () => {
+    render(<Home initialCorrectGuessNumber={5} initialRoundNumber={5}></Home>);
+
+    // Events to get to Results Screen
+    const user = userEvent.setup();
+    const startGameButton = screen.getByText("Start Game!");
+    await user.click(startGameButton);
+    const submitButton = await screen.findByText("Submit Drawing");
+    await user.click(submitButton);
+    const nextPromptButton = await screen.findByText("Next Prompt");
+    await user.click(nextPromptButton);
+
+    const results = screen.getByText("Results");
+    const correctGuesses = screen.getByText("You got 5 out of 5 prompts right!");
+    const playAgainButton = screen.getByText("Play Again");
+
+    expect(results).toBeInTheDocument();
+    expect(correctGuesses).toBeInTheDocument();
+    expect(playAgainButton).toBeInTheDocument();
+  });
+
+  it(`should load the lobby again after the "Try Again" button is clicked`, async () => {
+    render(<Home initialCorrectGuessNumber={5} initialRoundNumber={5}></Home>);
+
+    // Events to get to Results Screen
+    const user = userEvent.setup();
+    let startGameButton = screen.getByText("Start Game!");
+    await user.click(startGameButton);
+    const submitButton = await screen.findByText("Submit Drawing");
+    await user.click(submitButton);
+    const nextPromptButton = await screen.findByText("Next Prompt");
+    await user.click(nextPromptButton);
+
+    const playAgainButton = screen.getByText("Play Again");
+    await user.click(playAgainButton);
+
+    expect(playAgainButton).not.toBeInTheDocument();
+    const title = screen.getByText("AI Pictionary");
+    startGameButton = screen.getByText("Start Game!");
+    expect(title).toBeInTheDocument();
+    expect(startGameButton).toBeInTheDocument();
+  });
+});
