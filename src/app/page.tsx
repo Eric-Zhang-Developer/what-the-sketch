@@ -37,7 +37,6 @@ export default function Home({ initialRoundNumber = 1, initialCorrectGuessNumber
     const nextRound = roundNumber + 1;
     setRoundNumber(nextRound);
     if (nextRound > 5) {
-      console.log("end Game!!");
       setGameState(GameState.Results);
     }
   };

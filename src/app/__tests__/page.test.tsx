@@ -8,7 +8,7 @@ afterEach(() => cleanup());
 
 // This catches all fetches and returns the hard coded response with a success and cat!
 vi.spyOn(globalThis, "fetch").mockImplementation((url) => {
-  console.log(`[MOCKING] Fetch called with URL: ${url}`);
+  // console.log(`[MOCKING] Fetch called with URL: ${url}`);
   const mockApiResponse = {
     response: `This image is a **simple, hand-drawn illustration on a white background.** It features: * A **cartoon cat's head** drawn in black outline. 
   The cat has two pointy ears, two vertical lines for eyes, and a "W" shape for its mouth. * To the right of the cat, the word **"Meow!"** is written 
