@@ -81,7 +81,7 @@ function Sketchpad(
 
   return (
     <>
-      <div role="game">
+      <div role="game" className="w-full">
         <ReactSketchCanvas
           className=""
           height="400px"
