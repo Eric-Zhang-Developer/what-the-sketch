@@ -45,7 +45,6 @@ export const useGameStore = create<GameStore>((set) => ({
 
   incrementRoundNumber: () => {
     set((state) => ({ roundNumber: state.roundNumber + 1 }));
-    console.log("Incrementing Round Now!!");
   },
 
   setRoundNumber: (newRoundNumber) => {
@@ -57,12 +56,7 @@ export const useGameStore = create<GameStore>((set) => ({
     set({ guessState: GuessState.Pending });
     set({ turnCycleState: TurnCycleState.Drawing });
     set({ response: "" });
-
-    // Round Check
-    console.log(useGameStore.getState().roundNumber);
-    console.log("Incrementing!! ");
     set((state) => ({ roundNumber: state.roundNumber + 1 }));
-    console.log(useGameStore.getState().roundNumber);
 
     // End Game Logic
     if (useGameStore.getState().roundNumber > 5) {

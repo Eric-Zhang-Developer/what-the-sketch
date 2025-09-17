@@ -131,7 +131,6 @@ describe("Results Screen Tests", () => {
     });
 
     render(<Home></Home>);
-    console.log(`Round Number Test 1 Before: ${useGameStore.getState().roundNumber}`);
 
     // Events to get to Results Screen
     const user = userEvent.setup();
@@ -139,8 +138,6 @@ describe("Results Screen Tests", () => {
     await user.click(submitButton);
     const nextPromptButton = await screen.findByText("Next Prompt");
     await user.click(nextPromptButton);
-
-    console.log(`Round Number Test 1 After: ${useGameStore.getState().roundNumber}`);
 
     const results = screen.getByText("Results");
     const correctGuesses = screen.getByText("You got 4 out of 5 prompts right!");

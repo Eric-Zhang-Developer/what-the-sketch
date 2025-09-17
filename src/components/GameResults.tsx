@@ -13,7 +13,6 @@ export default function GameResults() {
     setCorrectGuesses(0);
   };
 
-  console.log(`Correct Guesses: ${correctGuesses}`);
   return (
     <main className="container mx-auto flex flex-col items-center gap-10 justify-center pt-40">
       <h1 className="text-5xl">Results</h1>
