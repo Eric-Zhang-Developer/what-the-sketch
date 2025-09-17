@@ -4,6 +4,7 @@ import { render, screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/vitest";
 import { initialState, useGameStore } from "@/store/gameStore";
+import { GameState } from "@/utils/types";
 
 afterEach(() => {
   cleanup();
@@ -11,7 +12,7 @@ afterEach(() => {
 });
 
 // This catches all fetches and returns the hard coded response with a success and cat!
-vi.spyOn(globalThis, "fetch").mockImplementation((url) => {
+vi.spyOn(globalThis, "fetch").mockImplementation(() => {
   // console.log(`[MOCKING] Fetch called with URL: ${url}`);
   const mockApiResponse = {
     response: `This image is a **simple, hand-drawn illustration on a white background.** It features: * A **cartoon cat's head** drawn in black outline. 
@@ -123,19 +124,26 @@ describe("Core Game Tests", () => {
 
 describe("Results Screen Tests", () => {
   it("should load the results screen after the last round", async () => {
-    render(<Home initialCorrectGuessNumber={5} initialRoundNumber={5}></Home>);
+    useGameStore.setState({
+      roundNumber: 5,
+      correctGuesses: 4,
+      gameState: GameState.Game,
+    });
+
+    render(<Home></Home>);
+    console.log(`Round Number Test 1 Before: ${useGameStore.getState().roundNumber}`);
 
     // Events to get to Results Screen
     const user = userEvent.setup();
-    const startGameButton = screen.getByText("Start Game!");
-    await user.click(startGameButton);
     const submitButton = await screen.findByText("Submit Drawing");
     await user.click(submitButton);
     const nextPromptButton = await screen.findByText("Next Prompt");
     await user.click(nextPromptButton);
 
+    console.log(`Round Number Test 1 After: ${useGameStore.getState().roundNumber}`);
+
     const results = screen.getByText("Results");
-    const correctGuesses = screen.getByText("You got 5 out of 5 prompts right!");
+    const correctGuesses = screen.getByText("You got 4 out of 5 prompts right!");
     const playAgainButton = screen.getByText("Play Again");
 
     expect(results).toBeInTheDocument();
@@ -144,12 +152,15 @@ describe("Results Screen Tests", () => {
   });
 
   it(`should load the lobby again after the "Try Again" button is clicked`, async () => {
-    render(<Home initialCorrectGuessNumber={5} initialRoundNumber={5}></Home>);
+    useGameStore.setState({
+      roundNumber: 5,
+      correctGuesses: 4,
+      gameState: GameState.Game,
+    });
+    render(<Home></Home>);
 
     // Events to get to Results Screen
     const user = userEvent.setup();
-    let startGameButton = screen.getByText("Start Game!");
-    await user.click(startGameButton);
     const submitButton = await screen.findByText("Submit Drawing");
     await user.click(submitButton);
     const nextPromptButton = await screen.findByText("Next Prompt");
@@ -160,7 +171,7 @@ describe("Results Screen Tests", () => {
 
     expect(playAgainButton).not.toBeInTheDocument();
     const title = screen.getByText("AI Pictionary");
-    startGameButton = screen.getByText("Start Game!");
+    const startGameButton = screen.getByText("Start Game!");
     expect(title).toBeInTheDocument();
     expect(startGameButton).toBeInTheDocument();
   });
