@@ -43,10 +43,6 @@ export const useGameStore = create<GameStore>((set) => ({
     set({ correctGuesses: newCorrectGuesses });
   },
 
-  incrementRoundNumber: () => {
-    set((state) => ({ roundNumber: state.roundNumber + 1 }));
-  },
-
   setRoundNumber: (newRoundNumber) => {
     set({ roundNumber: newRoundNumber });
   },

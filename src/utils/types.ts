@@ -64,7 +64,6 @@ export interface GameStore {
   setCurrentDrawingPrompt: (newCurrentDrawingPrompt: string) => void;
 
   roundNumber: number;
-  incrementRoundNumber: () => void;
   setRoundNumber: (newRoundNumber: number) => void;
 
   correctGuesses: number;
