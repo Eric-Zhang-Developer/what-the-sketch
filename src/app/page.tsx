@@ -10,7 +10,6 @@ import { useGameStore } from "@/store/gameStore";
 
 export default function Home() {
   const gameState = useGameStore((state) => state.gameState);
-  const setGameState = useGameStore((state) => state.setGameState);
   const turnCycleState = useGameStore((state) => state.turnCycleState);
   const currentDrawingPrompt = useGameStore((state) => state.currentDrawingPrompt);
   const setCurrentDrawingPrompt = useGameStore((state) => state.setCurrentDrawingPrompt);
@@ -41,7 +40,7 @@ export default function Home() {
   };
 
   const gameStateMap = {
-    [GameState.Lobby]: <Lobby setGameState={setGameState}></Lobby>,
+    [GameState.Lobby]: <Lobby></Lobby>,
     // TODO: Refactor Core Game into its own Component
     [GameState.Game]: (
       <div className="flex items-center justify-center flex-col gap-4 container mx-auto py-10">

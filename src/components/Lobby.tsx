@@ -1,6 +1,9 @@
-import { GameState, LobbyProps } from "@/utils/types";
+import { useGameStore } from "@/store/gameStore";
+import { GameState } from "@/utils/types";
 
-export default function Lobby({ setGameState }: LobbyProps) {
+export default function Lobby() {
+  const setGameState = useGameStore((state) => state.setGameState);
+
   const handleClick = () => {
     setGameState(GameState.Game);
   };
