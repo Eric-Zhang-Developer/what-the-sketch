@@ -3,8 +3,12 @@ import Home from "../page";
 import { render, screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/vitest";
+import { initialState, useGameStore } from "@/store/gameStore";
 
-afterEach(() => cleanup());
+afterEach(() => {
+  cleanup();
+  useGameStore.setState(initialState);
+});
 
 // This catches all fetches and returns the hard coded response with a success and cat!
 vi.spyOn(globalThis, "fetch").mockImplementation((url) => {
