@@ -56,3 +56,8 @@ export interface HomeProps {
   initialRoundNumber?: number;
   initialCorrectGuessNumber?: number;
 }
+
+export interface GameStore {
+  response: string;
+  setResponse: (response: string) => void;
+}

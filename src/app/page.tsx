@@ -6,9 +6,11 @@ import { useEffect, useState, useRef } from "react";
 import { getRandomPrompt } from "@/utils/get-random-prompt";
 import Lobby from "@/components/Lobby";
 import GameResults from "@/components/GameResults";
+import { useGameScore } from "@/store/gameStore";
 
 export default function Home({ initialRoundNumber = 1, initialCorrectGuessNumber = 0 }: HomeProps) {
-  const [response, setResponse] = useState<string>("");
+  const response = useGameScore((state) => state.response);
+  const setResponse = useGameScore((state) => state.setResponse);
   const [guessState, setGuessState] = useState<GuessState>(GuessState.Pending);
   const [gameState, setGameState] = useState<GameState>(GameState.Lobby);
   const [turnCycleState, setTurnCycleState] = useState<TurnCycleState>(TurnCycleState.Drawing);
