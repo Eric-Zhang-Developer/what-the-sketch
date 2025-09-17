@@ -6,25 +6,32 @@ import { useEffect, useState, useRef } from "react";
 import { getRandomPrompt } from "@/utils/get-random-prompt";
 import Lobby from "@/components/Lobby";
 import GameResults from "@/components/GameResults";
-import { useGameScore } from "@/store/gameStore";
+import { useGameStore } from "@/store/gameStore";
 
 export default function Home({ initialRoundNumber = 1, initialCorrectGuessNumber = 0 }: HomeProps) {
-  const response = useGameScore((state) => state.response);
-  const setResponse = useGameScore((state) => state.setResponse);
-  const [guessState, setGuessState] = useState<GuessState>(GuessState.Pending);
-  const [gameState, setGameState] = useState<GameState>(GameState.Lobby);
-  const [turnCycleState, setTurnCycleState] = useState<TurnCycleState>(TurnCycleState.Drawing);
-  const [currentDrawingPrompt, setCurrentDrawingPrompt] = useState<string>("");
+  const response = useGameStore((state) => state.response);
+  const setResponse = useGameStore((state) => state.setResponse);
+  const guessState = useGameStore((state) => state.guessState);
+  const setGuessState = useGameStore((state) => state.setGuessState);
+  const gameState = useGameStore((state) => state.gameState);
+  const setGameState = useGameStore((state) => state.setGameState);
+  const turnCycleState = useGameStore((state) => state.turnCycleState);
+  const setTurnCycleState = useGameStore((state) => state.setTurnCycleState);
+  const currentDrawingPrompt = useGameStore((state) => state.currentDrawingPrompt);
+  const setCurrentDrawingPrompt = useGameStore((state) => state.setCurrentDrawingPrompt);
+  const roundNumber = useGameStore((state) => state.roundNumber);
+  const setRoundNumber = useGameStore((state) => state.setRoundNumber);
+  const correctGuesses = useGameStore((state) => state.correctGuesses);
+  const setCorrectGuesses = useGameStore((state) => state.setCorrectGuesses);
+
   const sketchpadRef = useRef<SketchpadRef>(null);
-  const [roundNumber, setRoundNumber] = useState(initialRoundNumber);
-  const [correctGuesses, setCorrectGuesses] = useState(initialCorrectGuessNumber);
 
   // the image url processing happens entirely in Sketchpad. For now it is discarded after being given to the API. For future reference could save it.
 
   // Gets random prompt on page load
   useEffect(() => {
     setCurrentDrawingPrompt(getRandomPrompt());
-  }, []);
+  }, [setCurrentDrawingPrompt]);
 
   const handleNextPrompt = () => {
     setCurrentDrawingPrompt(getRandomPrompt());

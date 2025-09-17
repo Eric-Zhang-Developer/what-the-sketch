@@ -59,5 +59,23 @@ export interface HomeProps {
 
 export interface GameStore {
   response: string;
-  setResponse: (response: string) => void;
+  setResponse: (newResponse: string) => void;
+
+  guessState: GuessState;
+  setGuessState: (newGuessState: GuessState) => void;
+
+  gameState: GameState;
+  setGameState: (newGameState: GameState) => void;
+
+  turnCycleState: TurnCycleState;
+  setTurnCycleState: (newTurnCycleState: TurnCycleState) => void;
+
+  currentDrawingPrompt: string;
+  setCurrentDrawingPrompt: (newCurrentDrawingPrompt: string) => void;
+
+  roundNumber: number;
+  setRoundNumber: (newRoundNumber: number) => void;
+
+  correctGuesses: number;
+  setCorrectGuesses: (newCorrectGuesses: number) => void;
 }
