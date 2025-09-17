@@ -33,12 +33,7 @@ export enum GameState {
 }
 
 export interface TurnResultProps {
-  handleNextPrompt: () => void;
-  response: string;
-  guessState: GuessState;
-  setGameState: (gameState: GameState) => void;
-  roundNumber: number;
-  setRoundNumber: (roundNumber: number) => void;
+  onNextPromptClick: () => void;
 }
 
 export interface LobbyProps {
@@ -50,11 +45,6 @@ export interface GameResultsProps {
   setRoundNumber: (roundNumber: number) => void;
   correctGuesses: number;
   setCorrectGuesses: (correctGuesses: number) => void;
-}
-
-export interface HomeProps {
-  initialRoundNumber?: number;
-  initialCorrectGuessNumber?: number;
 }
 
 export interface GameStore {
@@ -74,8 +64,12 @@ export interface GameStore {
   setCurrentDrawingPrompt: (newCurrentDrawingPrompt: string) => void;
 
   roundNumber: number;
+  incrementRoundNumber: () => void;
   setRoundNumber: (newRoundNumber: number) => void;
 
   correctGuesses: number;
+  incrementCorrectGuesses: () => void;
   setCorrectGuesses: (newCorrectGuesses: number) => void;
+
+  handleNextPrompt: () => void;
 }

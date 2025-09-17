@@ -1,10 +1,10 @@
+import { useGameStore } from "@/store/gameStore";
 import { TurnResultProps, GuessState } from "@/utils/types";
 
-export default function TurnResultSection({
-  response,
-  handleNextPrompt,
-  guessState,
-}: TurnResultProps) {
+export default function TurnResultSection({ onNextPromptClick }: TurnResultProps) {
+  const guessState = useGameStore((state) => state.guessState);
+  const response = useGameStore((state) => state.response);
+
   // Visual Indicator for guess correctness, this is a placeholder for a more advanced scoring system
   const borderColorMap = {
     [GuessState.Pending]: "border-black",
@@ -18,7 +18,7 @@ export default function TurnResultSection({
         {response}
       </div>
       <button
-        onClick={handleNextPrompt}
+        onClick={onNextPromptClick}
         className="bg-blue-400 text-white px-10 py-3 rounded-xl text-2xl shadow-lg hover:cursor-pointer transition hover:scale-110"
       >
         Next Prompt

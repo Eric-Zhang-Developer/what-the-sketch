@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { GameState, GameStore, GuessState, TurnCycleState } from "@/utils/types";
+import { getRandomPrompt } from "@/utils/get-random-prompt";
 
 export const initialState = {
   response: "",
@@ -34,11 +35,38 @@ export const useGameStore = create<GameStore>((set) => ({
     set({ currentDrawingPrompt: newCurrentDrawingPrompt });
   },
 
-  setRoundNumber: (newRoundNumber) => {
-    set({ roundNumber: newRoundNumber });
+  incrementCorrectGuesses: () => {
+    set((state) => ({ correctGuesses: state.correctGuesses + 1 }));
   },
 
   setCorrectGuesses: (newCorrectGuesses) => {
     set({ correctGuesses: newCorrectGuesses });
+  },
+
+  incrementRoundNumber: () => {
+    set((state) => ({ roundNumber: state.roundNumber + 1 }));
+    console.log("Incrementing Round Now!!");
+  },
+
+  setRoundNumber: (newRoundNumber) => {
+    set({ roundNumber: newRoundNumber });
+  },
+
+  handleNextPrompt: () => {
+    set({ currentDrawingPrompt: getRandomPrompt() });
+    set({ guessState: GuessState.Pending });
+    set({ turnCycleState: TurnCycleState.Drawing });
+    set({ response: "" });
+
+    // Round Check
+    console.log(useGameStore.getState().roundNumber);
+    console.log("Incrementing!! ");
+    set((state) => ({ roundNumber: state.roundNumber + 1 }));
+    console.log(useGameStore.getState().roundNumber);
+
+    // End Game Logic
+    if (useGameStore.getState().roundNumber > 5) {
+      set({ gameState: GameState.Results });
+    }
   },
 }));
