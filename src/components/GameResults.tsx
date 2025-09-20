@@ -7,6 +7,7 @@ export default function GameResults() {
   const correctGuesses = useGameStore((state) => state.correctGuesses);
   const setCorrectGuesses = useGameStore((state) => state.setCorrectGuesses);
 
+  // TODO: Could move this to game store
   const handlePlayAgain = () => {
     setGameState(GameState.Lobby);
     setRoundNumber(1);

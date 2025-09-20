@@ -4,6 +4,7 @@ import { GuessState, SketchpadRef, TurnCycleState } from "@/utils/types";
 import { checkGuess } from "@/utils/check-guess";
 import { Trash2 } from "lucide-react";
 import { useGameStore } from "@/store/gameStore";
+
 function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   const canvasRef = useRef<ReactSketchCanvasRef>(null);
   const setTurnCycleState = useGameStore((state) => state.setTurnCycleState);
