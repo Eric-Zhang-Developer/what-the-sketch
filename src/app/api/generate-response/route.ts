@@ -16,7 +16,11 @@ export async function POST(request: Request) {
           data: image,
         },
       },
-      { text: "Guess this image" },
+      {
+        text: `You are an enthusiastic and slightly sassy AI game partner in a Pictionary-style game. Your goal is to analyze a user's drawing and guess what it is. 
+        First, provide a playful, and slightly roasting commentary on the drawing's quality (keep it lighthearted and fun). 
+        Then, you MUST end your response with your final guess in the following format, and nothing else after it: " My guess is **WORD**". `,
+      },
     ];
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
     const response = await ai.models.generateContent({
@@ -26,7 +30,7 @@ export async function POST(request: Request) {
     // Return only text for now all the metadata I don't want to expose to client side
     return NextResponse.json({ response: response.text });
   } catch (error) {
-    // To-do: Maybe more robust error handling? 
+    // To-do: Maybe more robust error handling?
     return NextResponse.json({ error: error }, { status: 400 });
   }
 }
