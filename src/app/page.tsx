@@ -19,7 +19,6 @@ export default function Home() {
 
   const gameStateMap = {
     [GameState.Lobby]: <Lobby></Lobby>,
-    // TODO: Refactor Core Game into its own Component
     [GameState.Game]: <Game></Game>,
     [GameState.Results]: <GameResults></GameResults>,
   };
