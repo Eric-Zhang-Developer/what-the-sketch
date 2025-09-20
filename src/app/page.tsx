@@ -3,9 +3,9 @@
 import { GameState } from "@/utils/types";
 import { useEffect } from "react";
 import { getRandomPrompt } from "@/utils/get-random-prompt";
+import { useGameStore } from "@/store/gameStore";
 import Lobby from "@/components/Lobby";
 import GameResults from "@/components/GameResults";
-import { useGameStore } from "@/store/gameStore";
 import Game from "@/components/Game";
 
 export default function Home() {

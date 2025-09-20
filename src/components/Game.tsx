@@ -1,8 +1,8 @@
 import { useGameStore } from "@/store/gameStore";
 import { useRef } from "react";
+import { SketchpadRef, TurnCycleState } from "@/utils/types";
 import TurnResultSection from "@/components/TurnResultSection";
 import Sketchpad from "@/components/Sketchpad";
-import { SketchpadRef, TurnCycleState } from "@/utils/types";
 
 export default function Game() {
   const turnCycleState = useGameStore((state) => state.turnCycleState);
