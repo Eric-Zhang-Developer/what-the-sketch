@@ -1,6 +1,6 @@
 import { describe, expect, it, afterEach, vi } from "vitest";
 import Home from "../page";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/vitest";
 import { initialState, useGameStore } from "@/store/gameStore";
@@ -96,10 +96,11 @@ describe("Core Game Tests", () => {
     const submitButton = await screen.findByText("Submit Drawing");
 
     await user.click(submitButton);
-    const response = await screen.findByText("cat", { exact: false });
+
+    const resultSection = await screen.findByTestId("turn-result-section");
     const nextPromptButton = await screen.findByText("Next Prompt");
 
-    expect(response).toBeInTheDocument();
+    expect(resultSection).toBeInTheDocument();
     expect(nextPromptButton).toBeInTheDocument();
   });
 
@@ -112,12 +113,12 @@ describe("Core Game Tests", () => {
     const submitButton = await screen.findByText("Submit Drawing");
 
     await user.click(submitButton);
-    const response = await screen.findByText("cat", { exact: false });
+    const resultSection = await screen.findByTestId("turn-result-section");
     const nextPromptButton = await screen.findByText("Next Prompt");
 
     await user.click(nextPromptButton);
 
-    expect(response).not.toBeInTheDocument();
+    expect(resultSection).not.toBeInTheDocument();
     expect(nextPromptButton).not.toBeInTheDocument();
   });
 });
