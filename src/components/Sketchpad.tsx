@@ -83,12 +83,15 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   return (
     <>
       <div role="game" className="w-full">
+        {/* There is a minor bug here, react sketch canvas has no way to freeze the canvas and prevent the user from drawing
+        this means the user can draw on the canvas after the drawing stage */}
         <ReactSketchCanvas
           className=""
           height="400px"
           strokeWidth={4}
           strokeColor="black"
           ref={canvasRef}
+          readOnly={!isCanvasDisabled}
         ></ReactSketchCanvas>
       </div>
 
