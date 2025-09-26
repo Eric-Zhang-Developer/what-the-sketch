@@ -121,6 +121,8 @@ describe("Core Game Tests", () => {
     expect(resultSection).not.toBeInTheDocument();
     expect(nextPromptButton).not.toBeInTheDocument();
   });
+
+  // TODO: Maybe write a test to check if button disability works?
 });
 
 describe("Results Screen Tests", () => {

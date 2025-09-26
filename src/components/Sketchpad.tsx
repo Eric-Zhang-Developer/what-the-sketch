@@ -17,13 +17,25 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   const isCanvasDisabled = turnCycleState !== TurnCycleState.Drawing;
 
   // For functions that other components / parent need
-  useImperativeHandle(ref, () => ({
-    clearCanvas: () => {
-      clearCanvas();
-    },
-  }));
+  useImperativeHandle(
+    ref,
+    () => ({
+      clearCanvas: () => {
+        clearCanvas();
+      },
+    }),
+    []
+  );
 
+  // This clear canvas is passed upward to the game.tsx, it needs to be called when turn cycle is at results so that is why no !isCanvasDisabled
   const clearCanvas = () => {
+    if (canvasRef.current) {
+      canvasRef.current.clearCanvas();
+    }
+  };
+
+  // This clear canvas is used for the red trash button
+  const onTrashClick = () => {
     if (canvasRef.current && !isCanvasDisabled) {
       canvasRef.current.clearCanvas();
     }
@@ -106,7 +118,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
         </button>
         <button
           aria-label="clear canvas"
-          onClick={clearCanvas}
+          onClick={onTrashClick}
           disabled={isCanvasDisabled}
           className="bg-red-400 py-3 px-3 text-2xl text-white rounded-xl shadow-lg hover:cursor-pointer transition hover:scale-110
           disabled:bg-red-300 disabled:opacity-80 disabled:hover:scale-100 disabled:hover:cursor-default"
