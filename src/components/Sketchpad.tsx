@@ -97,14 +97,19 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
       <div className="flex flex-row gap-4">
         <button
           onClick={handleSubmit}
-          className="bg-blue-400 text-white px-10 py-3 rounded-xl text-2xl shadow-lg hover:cursor-pointer transition hover:scale-110"
+          disabled={isCanvasDisabled}
+          className="bg-blue-400 text-white px-10 py-3 rounded-xl text-2xl shadow-lg 
+          hover:cursor-pointer transition hover:scale-110 
+          disabled:bg-blue-300 disabled:opacity-80 disabled:hover:scale-100 disabled:hover:cursor-default"
         >
           Submit Drawing
         </button>
         <button
           aria-label="clear canvas"
           onClick={clearCanvas}
-          className="bg-red-400 py-3 px-3 text-2xl text-white rounded-xl shadow-lg hover:cursor-pointer transition hover:scale-110"
+          disabled={isCanvasDisabled}
+          className="bg-red-400 py-3 px-3 text-2xl text-white rounded-xl shadow-lg hover:cursor-pointer transition hover:scale-110
+          disabled:bg-red-300 disabled:opacity-80 disabled:hover:scale-100 disabled:hover:cursor-default"
         >
           <Trash2 size={32}></Trash2>
         </button>
