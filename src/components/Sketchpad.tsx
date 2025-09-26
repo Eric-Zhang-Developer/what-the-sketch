@@ -37,6 +37,12 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
       console.error("Canvas ref is not available yet");
       return;
     }
+
+    if (isCanvasDisabled) {
+      console.error("Canvas is disabled");
+      return;
+    }
+
     setTurnCycleState(TurnCycleState.Loading);
     // Gemini API only accepts rawBase64Data not DataURI
     const fullDataURI = await canvasRef.current.exportImage("png");
