@@ -91,7 +91,6 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
           strokeWidth={4}
           strokeColor="black"
           ref={canvasRef}
-          readOnly={!isCanvasDisabled}
         ></ReactSketchCanvas>
       </div>
 
