@@ -8,24 +8,23 @@ import { useGameStore } from "@/store/gameStore";
 function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   const canvasRef = useRef<ReactSketchCanvasRef>(null);
   const setTurnCycleState = useGameStore((state) => state.setTurnCycleState);
+  const turnCycleState = useGameStore((state) => state.turnCycleState);
   const setResponse = useGameStore((state) => state.setResponse);
   const currentDrawingPrompt = useGameStore((state) => state.currentDrawingPrompt);
   const setGuessState = useGameStore((state) => state.setGuessState);
   const incrementCorrectGuesses = useGameStore((state) => state.incrementCorrectGuesses);
 
+  const isCanvasDisabled = turnCycleState !== TurnCycleState.Drawing;
+
   // For functions that other components / parent need
-  useImperativeHandle(
-    ref,
-    () => ({
-      clearCanvas: () => {
-        clearCanvas();
-      },
-    }),
-    []
-  );
+  useImperativeHandle(ref, () => ({
+    clearCanvas: () => {
+      clearCanvas();
+    },
+  }));
 
   const clearCanvas = () => {
-    if (canvasRef.current) {
+    if (canvasRef.current && !isCanvasDisabled) {
       canvasRef.current.clearCanvas();
     }
   };
