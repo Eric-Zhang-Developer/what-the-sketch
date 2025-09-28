@@ -4,12 +4,15 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Google GenAI](https://img.shields.io/badge/google%20gemini-8E75B2?style=for-the-badge&logo=google%20gemini&logoColor=white)](https://gemini.google/about/)
 [![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
+[![Zustand](https://img.shields.io/badge/Zustand-20232A?style=for-the-badge&logo=zustand&logoColor=white)](https://zustand-demo.pmnd.rs/)
 [![Vitest](https://img.shields.io/badge/Vitest-%236E9F18.svg?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
 [![React Testing Library](https://img.shields.io/badge/RTL-%23E33332.svg?style=for-the-badge&logo=testing-library&logoColor=white)](https://testing-library.com/)
 [![Eslint](https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)](https://eslint.org/)
 [![Turborepo](https://img.shields.io/badge/-Turborepo-EF4444?style=for-the-badge&logo=turborepo&logoColor=white)](https://turborepo.org/)
 
 ![Test Coverage](https://img.shields.io/badge/Coverage-83.5%25-green?style=for-the-badge)
+
+[![CI Checks](https://img.shields.io/github/actions/workflow/status/eric-zhang-developer/ai-pictionary/node.js.yml?style=for-the-badge&logo=github&logoColor=white)](https://github.com/eric-zhang-developer/ai-pictionary/actions/workflows/node.js.yml)
 
 # AI Pictionary
 
