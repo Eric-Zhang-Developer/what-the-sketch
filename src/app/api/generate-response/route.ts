@@ -1,8 +1,19 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
+import { ipAddress } from "@vercel/functions";
 import { GoogleGenAI } from "@google/genai";
+import { checkRateLimit } from "@/utils/check-rate-limit";
 
 // To-do write unit tests for this function
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  // --- IP rate limiting check ---
+  const ip = ipAddress(request) ?? "127.0.0.1";
+
+  const { limited } = await checkRateLimit(ip);
+
+  if (limited) {
+    return NextResponse.json({ error: "You have exceeded your daily limit." }, { status: 429 });
+  }
+
   try {
     // To-do: Although its probably a little overkill. Zod runtime validation here would be excellent
     const body = await request.json();
