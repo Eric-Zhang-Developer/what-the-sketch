@@ -18,6 +18,16 @@ export async function checkRateLimit(ip: string) {
     return { limited: true, error: "Internal server error" };
   }
 
+  if (ipData) {
+  } else {
+    const { error: insertError } = await supabase
+      .from("ip_rate_limits")
+      .insert({ ip: ip, request_count: 1, last_request_at: new Date().toISOString() });
+
+    if (insertError) {
+      console.error("Supabase insert error:", insertError.message);
+    }
+  }
   // ip data:
 
   // If we have a user
