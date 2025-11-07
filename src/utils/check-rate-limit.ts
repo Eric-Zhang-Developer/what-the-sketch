@@ -1,4 +1,3 @@
-import "server-only";
 import { createClient } from "@/utils/supabase/server";
 
 const RATE_LIMIT_COUNT = 50;
