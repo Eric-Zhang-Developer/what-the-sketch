@@ -7,9 +7,16 @@ export async function checkRateLimit(ip: string) {
   const supabase = await createClient();
   const now = Date.now();
 
-  // Select data from the database
+  const { data: ipData, error: selectError } = await supabase
+    .from("ip_rate_limits")
+    .select("*")
+    .eq("ip", ip)
+    .single();
 
-  // if it fails lock user out just to be safe
+  if (selectError && selectError?.code != "PGRST116") {
+    console.error("Supabase error fetching rate limit:", selectError.message);
+    return { limited: true, error: "Internal server error" };
+  }
 
   // ip data:
 
