@@ -19,7 +19,27 @@ export async function checkRateLimit(ip: string) {
   }
 
   if (ipData) {
+    const lastTimeRequest = new Date(ipData.last_request_at).getTime();
+    const timeDiff = now - lastTimeRequest;
+
+    //  --- Case 1: User is within the 24 hour window --
+    if (timeDiff < RATE_LIMIT_WINDOW) {
+      //  --- Case 1.1: User is OVER rate limit ---
+      //  --- Case 1.2: User is UNDER rate limit ---
+    } else {
+      // --- Case 2: User is out of the 24 hour window --
+      const { error: updateError } = await supabase
+        .from("ip_rate_limits")
+        .update({ request_count: 1 })
+        .eq("ip", ip);
+
+      if (updateError) {
+        console.error("Supabase update error", updateError.message);
+      }
+      return { limited: false };
+    }
   } else {
+    // --- Case 3: User not in database ---
     const { error: insertError } = await supabase
       .from("ip_rate_limits")
       .insert({ ip: ip, request_count: 1, last_request_at: new Date().toISOString() });
@@ -28,15 +48,6 @@ export async function checkRateLimit(ip: string) {
       console.error("Supabase insert error:", insertError.message);
     }
   }
-  // ip data:
-
-  // If we have a user
-  //  --- Case 1: User is within the 24 hour window --
-  //    --- If user is within rate limit update their count by 1
-  //  --- Case 2: User is out of the 24 hour window --
-
-  // No ip in database:
-  //  --- Case 3: User is not in database --- Add User
 
   return { limited: false };
 }
