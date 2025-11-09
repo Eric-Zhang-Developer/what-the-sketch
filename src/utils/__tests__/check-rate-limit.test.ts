@@ -70,6 +70,7 @@ describe("Check Rate Limit Tests", () => {
     const { data } = await supabaseTestClient.from("ip_rate_limits").select("request_count");
 
     if (!data) throw new Error("Expected rows from ip_rate_limits but got null");
+    expect(data[0].request_count).toBe(51);
   });
 });
 
