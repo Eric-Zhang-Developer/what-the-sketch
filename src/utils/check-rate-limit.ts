@@ -1,3 +1,9 @@
+/**
+ * Checks if an IP address has exceeded the rate limit for API requests.
+ * @param ip - The IP address to check
+ * @returns Promise resolving to rate limit status
+ */
+
 import { createClient } from "@/utils/supabase/server";
 import { RateLimitResult } from "./types";
 
