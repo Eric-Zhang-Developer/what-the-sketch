@@ -58,7 +58,7 @@ describe("Check Rate Limit Tests", () => {
     const testIP = "3.3.3.3";
     const { error: insertError } = await supabaseTestClient
       .from("ip_rate_limits")
-      .insert({ ip: testIP, request_count: 50 });
+      .insert({ ip: testIP, request_count: 51 });
 
     if (insertError) {
       throw new Error(`Supabase insertion error: ${insertError.message}`);

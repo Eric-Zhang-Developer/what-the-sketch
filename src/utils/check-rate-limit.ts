@@ -24,8 +24,19 @@ export async function checkRateLimit(ip: string) {
 
     //  --- Case 1: User is within the 24 hour window --
     if (timeDiff < RATE_LIMIT_WINDOW) {
-      //  --- Case 1.1: User is OVER rate limit ---
-      //  --- Case 1.2: User is UNDER rate limit ---
+      //    --- Case 1.1: User is OVER rate limit ---
+      if (ipData.request_count > RATE_LIMIT_COUNT) {
+        return { limited: true };
+      } else {
+        //  --- Case 1.2: User is UNDER rate limit ---
+        const { error: updateError } = await supabase
+          .from("ip_rate_limits")
+          .update({ request_count: ipData.request_count + 1 })
+          .eq("ip", ip);
+
+        if (updateError) console.error(`Supabase update error: ${updateError.message}`);
+        return { limited: false };
+      }
     } else {
       // --- Case 2: User is out of the 24 hour window --
       const { error: updateError } = await supabase
