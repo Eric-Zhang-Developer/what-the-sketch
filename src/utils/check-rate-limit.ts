@@ -38,7 +38,10 @@ export async function checkRateLimit(ip: string): Promise<RateLimitResult> {
         //  --- Case 1.2: User is UNDER rate limit ---
         const { error: updateError } = await supabase
           .from("ip_rate_limits")
-          .update({ request_count: ipData.request_count + 1 })
+          .update({
+            request_count: ipData.request_count + 1,
+            last_request_at: new Date().toISOString(),
+          })
           .eq("ip", ip);
 
         if (updateError) console.error(`Supabase update error: ${updateError.message}`);
@@ -48,7 +51,7 @@ export async function checkRateLimit(ip: string): Promise<RateLimitResult> {
       // --- Case 2: User is out of the 24 hour window --
       const { error: updateError } = await supabase
         .from("ip_rate_limits")
-        .update({ request_count: 1 })
+        .update({ request_count: 1, last_request_at: new Date().toISOString() })
         .eq("ip", ip);
 
       if (updateError) {
