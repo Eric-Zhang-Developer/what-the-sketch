@@ -32,7 +32,7 @@ export async function checkRateLimit(ip: string): Promise<RateLimitResult> {
     //  --- Case 1: User is within the 24 hour window --
     if (timeDiff <= RATE_LIMIT_WINDOW) {
       //    --- Case 1.1: User is OVER rate limit ---
-      if (ipData.request_count > RATE_LIMIT_COUNT) {
+      if (ipData.request_count >= RATE_LIMIT_COUNT) {
         return { limited: true };
       } else {
         //  --- Case 1.2: User is UNDER rate limit ---

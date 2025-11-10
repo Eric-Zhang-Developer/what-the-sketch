@@ -58,7 +58,7 @@ describe("Check Rate Limit Tests", () => {
     const testIP = "3.3.3.3";
     const { error: insertError } = await supabaseTestClient
       .from("ip_rate_limits")
-      .insert({ ip: testIP, request_count: 51 });
+      .insert({ ip: testIP, request_count: 50 });
 
     if (insertError) {
       throw new Error(`Supabase insertion error: ${insertError.message}`);
@@ -70,14 +70,14 @@ describe("Check Rate Limit Tests", () => {
     const { data } = await supabaseTestClient.from("ip_rate_limits").select("request_count");
 
     if (!data) throw new Error("Expected rows from ip_rate_limits but got null");
-    expect(data[0].request_count).toBe(51);
+    expect(data[0].request_count).toBe(50);
   });
 
-  it("should not rate limit the user if they are at exactly 50 requests", async () => {
+  it("should not rate limit the user if they are at exactly 49 requests", async () => {
     const testIP = "4.4.4.4";
     const { error: insertError } = await supabaseTestClient
       .from("ip_rate_limits")
-      .insert({ ip: testIP, request_count: 50 });
+      .insert({ ip: testIP, request_count: 49 });
     if (insertError) throw new Error(`Supabase insertion error: ${insertError.message}`);
 
     const result = await checkRateLimit(testIP);
@@ -89,7 +89,7 @@ describe("Check Rate Limit Tests", () => {
       .eq("ip", testIP)
       .single();
     if (!data) throw new Error("Expected rows from ip_rate_limits but got null");
-    expect(data.request_count).toBe(51);
+    expect(data.request_count).toBe(50);
   });
 
   it("should reset the user's limit 24 hours after the last request", async () => {
