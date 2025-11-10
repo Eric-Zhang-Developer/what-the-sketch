@@ -98,7 +98,7 @@ describe("Check Rate Limit Tests", () => {
     const oldTimestamp = new Date(Date.now() - RATE_LIMIT_WINDOW - 1000).toISOString();
     const { error: insertError } = await supabaseTestClient
       .from("ip_rate_limits")
-      .insert({ ip: testIP, request_count: 51, last_request_at: oldTimestamp });
+      .insert({ ip: testIP, request_count: 51, rate_limit_window_start: oldTimestamp });
     if (insertError) throw new Error(`Supabase insertion error: ${insertError.message}`);
 
     const result = await checkRateLimit(testIP);
