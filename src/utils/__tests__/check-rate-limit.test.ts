@@ -24,17 +24,14 @@ describe("Check Rate Limit Tests", () => {
     const result = await checkRateLimit(testIP);
 
     expect(result.limited).toBe(false);
-    const { data, error } = await supabaseTestClient
+    const { data } = await supabaseTestClient
       .from("ip_rate_limits")
       .select("*")
-      .eq("ip", testIP);
-
-    expect(error).toBe(null);
-
+      .eq("ip", testIP)
+      .single();
     if (!data) throw new Error("Expected rows from ip_rate_limits but got null");
 
-    expect(data).toHaveLength(1);
-    expect(data[0].request_count).toBe(1);
+    expect(data.request_count).toBe(1);
   });
 
   it("should correctly increment the rate count for a existing user", async () => {
@@ -48,10 +45,14 @@ describe("Check Rate Limit Tests", () => {
     const result = await checkRateLimit(testIP);
 
     expect(result.limited).toBe(false);
-    const { data } = await supabaseTestClient.from("ip_rate_limits").select("request_count");
+    const { data } = await supabaseTestClient
+      .from("ip_rate_limits")
+      .select("*")
+      .eq("ip", testIP)
+      .single();
 
     if (!data) throw new Error("Expected rows from ip_rate_limits but got null");
-    expect(data[0].request_count).toBe(6);
+    expect(data.request_count).toBe(6);
   });
 
   it("should rate limit the user if they have sent too many requests / too many guesses", async () => {
@@ -67,10 +68,14 @@ describe("Check Rate Limit Tests", () => {
     const result = await checkRateLimit(testIP);
 
     expect(result.limited).toBe(true);
-    const { data } = await supabaseTestClient.from("ip_rate_limits").select("request_count");
+    const { data } = await supabaseTestClient
+      .from("ip_rate_limits")
+      .select("*")
+      .eq("ip", testIP)
+      .single();
 
     if (!data) throw new Error("Expected rows from ip_rate_limits but got null");
-    expect(data[0].request_count).toBe(50);
+    expect(data.request_count).toBe(50);
   });
 
   it("should not rate limit the user if they are at exactly 49 requests", async () => {
