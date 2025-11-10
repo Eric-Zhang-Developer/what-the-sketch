@@ -56,3 +56,8 @@ export interface GameStore {
 
   handleNextPrompt: () => void;
 }
+
+export interface RateLimitResult {
+  limited: boolean;
+  error?: string;
+}
