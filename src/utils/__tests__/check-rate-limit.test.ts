@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { checkRateLimit } from "../check-rate-limit";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 const supabaseTestClient = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -14,7 +14,7 @@ vi.mock("@/utils/supabase/server", () => ({
   createClient: async () => supabaseTestClient,
 }));
 
-beforeEach(async () => {
+afterEach(async () => {
   await supabaseTestClient.from("ip_rate_limits").delete().neq("ip", "a-fake-ip");
 });
 
