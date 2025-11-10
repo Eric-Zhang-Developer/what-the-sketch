@@ -7,8 +7,8 @@
 import { createClient } from "@/utils/supabase/server";
 import { RateLimitResult } from "./types";
 
-const RATE_LIMIT_COUNT = 50;
-const RATE_LIMIT_WINDOW = 24 * 60 * 60 * 1000; // 24 hours
+export const RATE_LIMIT_COUNT = 50;
+export const RATE_LIMIT_WINDOW = 24 * 60 * 60 * 1000; // 24 hours
 
 export async function checkRateLimit(ip: string): Promise<RateLimitResult> {
   const supabase = await createClient();

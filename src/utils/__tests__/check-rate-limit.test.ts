@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { checkRateLimit } from "../check-rate-limit";
+import { checkRateLimit, RATE_LIMIT_COUNT, RATE_LIMIT_WINDOW } from "../check-rate-limit";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const supabaseTestClient = createClient(
@@ -59,7 +59,7 @@ describe("Check Rate Limit Tests", () => {
     const testIP = "3.3.3.3";
     const { error: insertError } = await supabaseTestClient
       .from("ip_rate_limits")
-      .insert({ ip: testIP, request_count: 50 });
+      .insert({ ip: testIP, request_count: RATE_LIMIT_COUNT });
 
     if (insertError) {
       throw new Error(`Supabase insertion error: ${insertError.message}`);
@@ -75,14 +75,14 @@ describe("Check Rate Limit Tests", () => {
       .single();
 
     if (!data) throw new Error("Expected rows from ip_rate_limits but got null");
-    expect(data.request_count).toBe(50);
+    expect(data.request_count).toBe(RATE_LIMIT_COUNT);
   });
 
-  it("should not rate limit the user if they are at exactly 49 requests", async () => {
+  it("should not rate limit the user if they are 1 request below the rate limit", async () => {
     const testIP = "4.4.4.4";
     const { error: insertError } = await supabaseTestClient
       .from("ip_rate_limits")
-      .insert({ ip: testIP, request_count: 49 });
+      .insert({ ip: testIP, request_count: RATE_LIMIT_COUNT - 1 });
     if (insertError) throw new Error(`Supabase insertion error: ${insertError.message}`);
 
     const result = await checkRateLimit(testIP);
@@ -94,16 +94,19 @@ describe("Check Rate Limit Tests", () => {
       .eq("ip", testIP)
       .single();
     if (!data) throw new Error("Expected rows from ip_rate_limits but got null");
-    expect(data.request_count).toBe(50);
+    expect(data.request_count).toBe(RATE_LIMIT_COUNT);
   });
 
   it("should reset the user's limit 24 hours after the last request", async () => {
     const testIP = "5.5.5.5";
-    const RATE_LIMIT_WINDOW = 24 * 60 * 60 * 1000;
     const oldTimestamp = new Date(Date.now() - RATE_LIMIT_WINDOW - 1000).toISOString();
     const { error: insertError } = await supabaseTestClient
       .from("ip_rate_limits")
-      .insert({ ip: testIP, request_count: 51, rate_limit_window_start: oldTimestamp });
+      .insert({
+        ip: testIP,
+        request_count: RATE_LIMIT_COUNT,
+        rate_limit_window_start: oldTimestamp,
+      });
     if (insertError) throw new Error(`Supabase insertion error: ${insertError.message}`);
 
     const result = await checkRateLimit(testIP);
