@@ -40,7 +40,6 @@ export async function checkRateLimit(ip: string): Promise<RateLimitResult> {
           .from("ip_rate_limits")
           .update({
             request_count: ipData.request_count + 1,
-            last_request_at: new Date().toISOString(),
           })
           .eq("ip", ip);
 
