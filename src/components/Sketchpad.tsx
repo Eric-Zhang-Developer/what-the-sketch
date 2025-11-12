@@ -63,7 +63,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
     try {
       // API Call
 
-      const response = await fetch("http://localhost:3000/api/generate-response", {
+      const response = await fetch("/api/generate-response", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ image: rawBase64Data }),
