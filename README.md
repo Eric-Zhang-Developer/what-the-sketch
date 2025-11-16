@@ -18,6 +18,8 @@
 
 # What the Sketch?
 
+[![Play Now!](https://img.shields.io/badge/-Play%20Now!-brightgreen?style=for-the-badge)](https://whatthesketch.io)
+
 A web application where you draw a picture based on a given prompt, and a generative AI attempts to guess what it is.
 
 ## Overview
