@@ -68,4 +68,4 @@ A web application where you draw a picture based on a given prompt, and a genera
 
 ## License
 
-The source code for this project is made available for educational and demonstration purposes only. Please see the `LICENSE.md` file for details. All rights are reserved.
+The source code for this project is made available for educational and demonstration purposes only. Please see the `LICENSE` file for details. All rights are reserved.
