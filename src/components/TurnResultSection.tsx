@@ -21,7 +21,7 @@ export default function TurnResultSection({ onNextPromptClick }: TurnResultProps
   return (
     <>
       <div
-        className={`border-2 py-10 px-10 rounded-2xl text-center mt-10 bg-slate-100 shadow-xl flex flex-col gap-4 ${borderColorMap[guessState]}`}
+        className={`border-2 py-10 px-10 rounded-2xl text-center mt-10 bg-slate-200 shadow-xl flex flex-col gap-4 ${borderColorMap[guessState]}`}
         data-testid="turn-result-section"
       >
         <div className="text-lg text-slate-800">
