@@ -1,7 +1,7 @@
 import { useGameStore } from "@/store/gameStore";
 import { GameState } from "@/utils/types";
 import Image from "next/image";
-
+import Button from "./Button";
 export default function Lobby() {
   const setGameState = useGameStore((state) => state.setGameState);
 
@@ -19,12 +19,7 @@ export default function Lobby() {
         className="w-full max-w-3xl h-auto"
         priority
       ></Image>
-      <button
-        onClick={handleClick}
-        className="bg-blue-400 text-white px-10 py-3 rounded-xl text-2xl shadow-lg hover:cursor-pointer transition hover:scale-110"
-      >
-        Start Game!
-      </button>
+      <Button onClick={handleClick}>Start Game!</Button>
     </main>
   );
 }

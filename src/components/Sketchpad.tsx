@@ -4,6 +4,7 @@ import { GuessState, SketchpadRef, TurnCycleState } from "@/utils/types";
 import { checkGuess } from "@/utils/check-guess";
 import { Trash2 } from "lucide-react";
 import { useGameStore } from "@/store/gameStore";
+import Button from "./Button";
 
 function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   const canvasRef = useRef<ReactSketchCanvasRef>(null);
@@ -107,24 +108,17 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
       </div>
 
       <div className="flex flex-row gap-4">
-        <button
-          onClick={handleSubmit}
-          disabled={isCanvasDisabled}
-          className="bg-blue-400 text-white px-10 py-3 rounded-xl text-2xl shadow-lg 
-          hover:cursor-pointer transition hover:scale-110 
-          disabled:bg-blue-300 disabled:opacity-80 disabled:hover:scale-100 disabled:hover:cursor-default"
-        >
+        <Button onClick={handleSubmit} disabled={isCanvasDisabled}>
           Submit Drawing
-        </button>
-        <button
+        </Button>
+        <Button
           aria-label="clear canvas"
           onClick={onTrashClick}
           disabled={isCanvasDisabled}
-          className="bg-red-400 py-3 px-3 text-2xl text-white rounded-xl shadow-lg hover:cursor-pointer transition hover:scale-110
-          disabled:bg-red-300 disabled:opacity-80 disabled:hover:scale-100 disabled:hover:cursor-default"
+          variant="danger"
         >
           <Trash2 size={32}></Trash2>
-        </button>
+        </Button>
       </div>
     </>
   );

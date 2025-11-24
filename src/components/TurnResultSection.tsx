@@ -1,6 +1,7 @@
 import { useGameStore } from "@/store/gameStore";
 import { TurnResultProps, GuessState } from "@/utils/types";
 import Markdown from "react-markdown";
+import Button from "./Button";
 
 export default function TurnResultSection({ onNextPromptClick }: TurnResultProps) {
   const guessState = useGameStore((state) => state.guessState);
@@ -32,12 +33,7 @@ export default function TurnResultSection({ onNextPromptClick }: TurnResultProps
         </div>
       </div>
 
-      <button
-        onClick={onNextPromptClick}
-        className="bg-blue-400 text-white px-10 py-3 rounded-xl text-2xl shadow-lg hover:cursor-pointer transition hover:scale-110"
-      >
-        Next Prompt
-      </button>
+      <Button onClick={onNextPromptClick}>Next Prompt</Button>
     </>
   );
 }
