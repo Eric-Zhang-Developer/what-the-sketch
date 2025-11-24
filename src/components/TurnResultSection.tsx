@@ -19,10 +19,19 @@ export default function TurnResultSection({ onNextPromptClick }: TurnResultProps
     [GuessState.Incorrect]: "border-red-500",
   };
 
+  const borderShadowColorMap = {
+    [GuessState.Pending]: "0, 0, 0, 1",
+    [GuessState.Correct]: "16, 185, 129, 1",
+    [GuessState.Incorrect]: "239, 68, 68, 1",
+  };
+
   return (
     <>
       <div
-        className={`border-2 py-10 px-10 rounded-2xl text-center mt-10 bg-slate-200 shadow-xl flex flex-col gap-4 ${borderColorMap[guessState]}`}
+        className={`border-4 py-10 px-10 rounded-2xl text-center mt-10 bg-slate-200 flex flex-col gap-4 ${borderColorMap[guessState]}`}
+        style={{
+          boxShadow: `4px 6px 0px 0px rgba(${borderShadowColorMap[guessState]})`,
+        }}
         data-testid="turn-result-section"
       >
         <div className="text-lg text-slate-800">
