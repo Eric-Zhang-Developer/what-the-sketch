@@ -110,8 +110,8 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
         ></ReactSketchCanvas>
       </div>
 
-      <div className="flex flex-row gap-4">
-        <Button onClick={handleSubmit} disabled={isCanvasDisabled}>
+      <div className="flex flex-row gap-4 w-full">
+        <Button onClick={handleSubmit} disabled={isCanvasDisabled} className="flex-grow">
           Submit Drawing
         </Button>
         <Button
