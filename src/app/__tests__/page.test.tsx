@@ -46,7 +46,7 @@ describe("Lobby Tests", () => {
   it("should load the lobby on initial page load", () => {
     render(<Home></Home>);
 
-    const title = screen.getByText("AI Pictionary");
+    const title = screen.getByLabelText("what-the-sketch-banner");
     const startGameButton = screen.getByText("Start Game!");
 
     expect(title).toBeInTheDocument();
@@ -57,7 +57,7 @@ describe("Lobby Tests", () => {
     render(<Home></Home>);
     const user = userEvent.setup();
 
-    const title = screen.getByText("AI Pictionary");
+    const title = screen.getByLabelText("what-the-sketch-banner");
     const startGameButton = screen.getByText("Start Game!");
     await user.click(startGameButton);
 
@@ -170,7 +170,7 @@ describe("Results Screen Tests", () => {
     await user.click(playAgainButton);
 
     expect(playAgainButton).not.toBeInTheDocument();
-    const title = screen.getByText("AI Pictionary");
+    const title = screen.getByLabelText("what-the-sketch-banner");
     const startGameButton = screen.getByText("Start Game!");
     expect(title).toBeInTheDocument();
     expect(startGameButton).toBeInTheDocument();

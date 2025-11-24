@@ -12,6 +12,7 @@ export default function Lobby() {
   return (
     <main className="container mx-auto flex flex-col items-center gap-10 justify-center pt-20">
       <Image
+        aria-label="what-the-sketch-banner"
         src="/banner.webp"
         alt="What the Sketch? Banner"
         width={900}
