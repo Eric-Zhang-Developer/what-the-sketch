@@ -95,7 +95,10 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
 
   return (
     <>
-      <div role="game" className="w-full">
+      <div
+        role="game"
+        className="w-full border-4 rounded-3xl bg-white overflow-hidden border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+      >
         {/* There is a minor bug here, react sketch canvas has no way to freeze the canvas and prevent the user from drawing
         this means the user can draw on the canvas after the drawing stage */}
         <ReactSketchCanvas
