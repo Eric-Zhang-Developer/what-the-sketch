@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
+import { Patrick_Hand } from "next/font/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "AI Pictionary",
   description: "Guess that Picture!",
 };
+
+const patrickHand = Patrick_Hand({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-patrick-hand",
+});
 
 export default function RootLayout({
   children,
@@ -13,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-slate-100">
-      <body>{children}</body>
+      <body className={patrickHand.className}>{children}</body>
     </html>
   );
 }
