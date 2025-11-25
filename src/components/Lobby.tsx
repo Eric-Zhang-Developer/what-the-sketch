@@ -1,6 +1,7 @@
 import { useGameStore } from "@/store/gameStore";
 import { GameState } from "@/utils/types";
-
+import Image from "next/image";
+import Button from "./Button";
 export default function Lobby() {
   const setGameState = useGameStore((state) => state.setGameState);
 
@@ -9,14 +10,17 @@ export default function Lobby() {
   };
 
   return (
-    <main className="container mx-auto flex flex-col items-center gap-10 justify-center pt-40">
-      <h1 className="text-5xl">AI Pictionary</h1>
-      <button
-        onClick={handleClick}
-        className="bg-blue-400 text-white px-10 py-3 rounded-xl text-2xl shadow-lg hover:cursor-pointer transition hover:scale-110"
-      >
-        Start Game!
-      </button>
+    <main className="container mx-auto flex flex-col items-center gap-10 justify-center pt-20">
+      <Image
+        aria-label="what-the-sketch-banner"
+        src="/banner.webp"
+        alt="What the Sketch? Banner"
+        width={900}
+        height={314}
+        className="w-full max-w-3xl h-auto"
+        priority
+      ></Image>
+      <Button onClick={handleClick}>Start Game!</Button>
     </main>
   );
 }

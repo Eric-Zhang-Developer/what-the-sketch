@@ -1,6 +1,7 @@
 import { useGameStore } from "@/store/gameStore";
 import { TurnResultProps, GuessState } from "@/utils/types";
 import Markdown from "react-markdown";
+import Button from "./Button";
 
 export default function TurnResultSection({ onNextPromptClick }: TurnResultProps) {
   const guessState = useGameStore((state) => state.guessState);
@@ -18,26 +19,34 @@ export default function TurnResultSection({ onNextPromptClick }: TurnResultProps
     [GuessState.Incorrect]: "border-red-500",
   };
 
+  const borderShadowColorMap = {
+    [GuessState.Pending]: "0, 0, 0, 1",
+    [GuessState.Correct]: "16, 185, 129, 1",
+    [GuessState.Incorrect]: "239, 68, 68, 1",
+  };
+
   return (
     <>
       <div
-        className={`border-2 py-10 px-10 rounded-2xl text-center mt-10 bg-slate-100 shadow-xl flex flex-col gap-4 ${borderColorMap[guessState]}`}
+        className={`border-4 p-8 rounded-2xl text-center bg-white flex flex-col gap-4 ${borderColorMap[guessState]}`}
+        style={{
+          boxShadow: `4px 6px 0px 0px rgba(${borderShadowColorMap[guessState]})`,
+        }}
         data-testid="turn-result-section"
       >
-        <div className="text-lg text-slate-800">
+        <div className="text-2xl text-slate-800 text-left">
           <Markdown>{commentary}</Markdown>
         </div>
-        <div className="text-2xl">
+
+        {/* Line Separator */}
+        <div className="w-full border-b-2 h-1 border-slate-300 border-double"></div>
+
+        <div className="text-4xl">
           <Markdown>{guess}</Markdown>
         </div>
       </div>
 
-      <button
-        onClick={onNextPromptClick}
-        className="bg-blue-400 text-white px-10 py-3 rounded-xl text-2xl shadow-lg hover:cursor-pointer transition hover:scale-110"
-      >
-        Next Prompt
-      </button>
+      <Button onClick={onNextPromptClick}>Next Prompt</Button>
     </>
   );
 }

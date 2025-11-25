@@ -28,8 +28,8 @@ export default function Game() {
   };
   return (
     <>
-      <div className="flex items-center justify-center flex-col gap-4 container mx-auto py-10">
-        <h1 className="text-5xl" aria-label="prompt">
+      <div className="flex items-center justify-center flex-col gap-5 container mx-auto py-5">
+        <h1 className="text-6xl" aria-label="prompt">
           Draw a {currentDrawingPrompt}
         </h1>
         <Sketchpad ref={sketchpadRef}></Sketchpad>
