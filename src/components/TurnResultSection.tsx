@@ -28,16 +28,20 @@ export default function TurnResultSection({ onNextPromptClick }: TurnResultProps
   return (
     <>
       <div
-        className={`border-4 py-10 px-10 rounded-2xl text-center mt-10 bg-slate-200 flex flex-col gap-4 ${borderColorMap[guessState]}`}
+        className={`border-4 p-8 rounded-2xl text-center mt-10 bg-white flex flex-col gap-4 ${borderColorMap[guessState]}`}
         style={{
           boxShadow: `4px 6px 0px 0px rgba(${borderShadowColorMap[guessState]})`,
         }}
         data-testid="turn-result-section"
       >
-        <div className="text-lg text-slate-800">
+        <div className="text-2xl text-slate-800 text-left">
           <Markdown>{commentary}</Markdown>
         </div>
-        <div className="text-2xl">
+
+        {/* Line Separator */}
+        <div className="w-full border-b-2 h-1 border-slate-300 border-double"></div>
+
+        <div className="text-4xl">
           <Markdown>{guess}</Markdown>
         </div>
       </div>
