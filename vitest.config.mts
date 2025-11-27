@@ -11,6 +11,12 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/**/*.{ts,tsx}"],
+      exclude: [
+        "src/utils/supabase/database.types.ts", // Supabase generated types
+        "src/utils/supabase/server.ts", // Logic given by supabase / boilerplate code
+        "src/app/layout.tsx", // No meaningful logic to test
+        "src/utils/drawing-prompts.ts", // Static data
+      ],
     },
   },
 });
