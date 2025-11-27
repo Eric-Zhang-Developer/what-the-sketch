@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { ipAddress } from "@vercel/functions";
 import { GoogleGenAI } from "@google/genai";
 import { checkRateLimit } from "@/utils/check-rate-limit";
+import z from "zod";
 
 // To-do write unit tests for this function
 export async function POST(request: NextRequest) {
@@ -15,9 +16,22 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // To-do: Although its probably a little overkill. Zod runtime validation here would be excellent
+    // Zod Validation for request
+    const base64Regex = /^[A-Za-z0-9+/]+=*$/;
+    const requestSchema = z.object({
+      image: z
+        .string()
+        .min(1, "Image data is required")
+        .max(5_000_000, "Image exceeds size limit")
+        .regex(base64Regex, "Invalid base64 format"),
+    });
+
     const body = await request.json();
-    const image = body.image;
+    const result = requestSchema.safeParse(body);
+    if (!result.success) {
+      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    }
+    const image = result.data.image;
 
     // To-do: For future reference for changeable prompts also feed a textPrompt. variable to contents
     const contents = [
