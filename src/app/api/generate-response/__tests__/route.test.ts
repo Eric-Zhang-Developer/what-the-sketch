@@ -1,7 +1,8 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { POST } from "../route";
 import { NextRequest } from "next/server";
-
+import { checkRateLimit } from "@/utils/check-rate-limit";
+import { GoogleGenAI } from "@google/genai";
 // Mock rate limiter
 vi.mock("@/utils/check-rate-limit", () => ({
   checkRateLimit: vi.fn().mockResolvedValue({ limited: false }),
@@ -19,9 +20,12 @@ vi.mock("@google/genai", () => ({
 }));
 
 describe("POST /api/generate-response", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
   describe("when rate limit passes", () => {
     describe("and request is valid", () => {
-      it("returns the AI response", async () => {
+      it("returns 200 and the AI response", async () => {
         const request = new NextRequest("http://localhost/api/generate-response", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -32,8 +36,23 @@ describe("POST /api/generate-response", () => {
         const json = await response.json();
 
         expect(response.status).toBe(200);
-        console.log(json.response);
         expect(json.response).toBe(AIAnswer);
+      });
+    });
+  });
+  describe("when rate limit is exceeded", () => {
+    describe("and request is valid", () => {
+      it("returns 429 and does not call Gemini", async () => {
+        vi.mocked(checkRateLimit).mockResolvedValue({ limited: true });
+        const request = new NextRequest("http://localhost/api/generate-response", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image: "SomeBase64data" }),
+        });
+
+        const response = await POST(request);
+        expect(response.status).toBe(429);
+        expect(GoogleGenAI).not.toHaveBeenCalled();
       });
     });
   });
