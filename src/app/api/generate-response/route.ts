@@ -4,7 +4,6 @@ import { GoogleGenAI } from "@google/genai";
 import { checkRateLimit } from "@/utils/check-rate-limit";
 import z from "zod";
 
-// To-do write unit tests for this function
 export async function POST(request: NextRequest) {
   // --- IP rate limiting check ---
   const ip = ipAddress(request) ?? "127.0.0.1";
@@ -61,7 +60,7 @@ export async function POST(request: NextRequest) {
     // Return only text for now all the metadata I don't want to expose to client side
     return NextResponse.json({ response: response.text });
   } catch (error) {
-    // To-do: Maybe more robust error handling?
-    return NextResponse.json({ error: error }, { status: 400 });
+    console.error("Gemini API error:", error);
+    return NextResponse.json({ error: `AI API service unavailable` }, { status: 500 });
   }
 }
