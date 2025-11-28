@@ -11,10 +11,11 @@ vi.mock("@/utils/check-rate-limit", () => ({
 const AIAnswer = "This image is a cat";
 
 // Mock Google GenAI
+const mockGenerateContent = vi.fn();
 vi.mock("@google/genai", () => ({
   GoogleGenAI: vi.fn().mockImplementation(() => ({
     models: {
-      generateContent: vi.fn().mockResolvedValue({ text: AIAnswer }),
+      generateContent: mockGenerateContent,
     },
   })),
 }));
@@ -22,6 +23,8 @@ vi.mock("@google/genai", () => ({
 describe("POST /api/generate-response", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // Reset to the API Working every test ( this needed for the test where Gemini fails)
+    mockGenerateContent.mockResolvedValue({ text: AIAnswer });
   });
   describe("when rate limit passes", () => {
     describe("and request is valid", () => {
@@ -97,6 +100,26 @@ describe("POST /api/generate-response", () => {
         expect(response.status).toBe(400);
         expect(json.error).toBe("Invalid JSON");
         expect(GoogleGenAI).not.toHaveBeenCalled();
+      });
+    });
+    describe("and LLM Provider Fails", () => {
+      it("returns 500", async () => {
+        // Mock Gemini Error
+        mockGenerateContent.mockRejectedValue(new Error("Gemini is down!"));
+        // Suppress annoying console.error
+        const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+        const request = new NextRequest("http://localhost/api/generate-response", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image: "SomeBase64data" }),
+        });
+        const response = await POST(request);
+        const json = await response.json();
+
+        expect(response.status).toBe(500);
+        expect(json.error).toBe("AI API service unavailable");
+        expect(GoogleGenAI).toHaveBeenCalled();
+        expect(consoleSpy).toHaveBeenCalledWith("Gemini API error:", expect.any(Error));
       });
     });
   });
