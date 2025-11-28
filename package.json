@@ -24,6 +24,7 @@
     "react-dom": "19.1.0",
     "react-markdown": "^10.1.0",
     "react-sketch-canvas": "^6.2.0",
+    "zod": "^4.1.13",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
