@@ -15,24 +15,30 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "You have exceeded your daily limit." }, { status: 429 });
   }
 
+  // --- Request Parsing and Validation --
+  let body;
   try {
-    // Zod Validation for request
-    const base64Regex = /^[A-Za-z0-9+/]+=*$/;
-    const requestSchema = z.object({
-      image: z
-        .string()
-        .min(1, "Image data is required")
-        .max(5_000_000, "Image exceeds size limit")
-        .regex(base64Regex, "Invalid base64 format"),
-    });
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+  // Zod Validation for request
+  const base64Regex = /^[A-Za-z0-9+/]+=*$/;
+  const requestSchema = z.object({
+    image: z
+      .string()
+      .min(1, "Image data is required")
+      .max(5_000_000, "Image exceeds size limit")
+      .regex(base64Regex, "Invalid base64 format"),
+  });
+  const result = requestSchema.safeParse(body);
+  if (!result.success) {
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  }
+  const image = result.data.image;
 
-    const body = await request.json();
-    const result = requestSchema.safeParse(body);
-    if (!result.success) {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
-    }
-    const image = result.data.image;
-
+  // --- Gemini API Call ---
+  try {
     // To-do: For future reference for changeable prompts also feed a textPrompt. variable to contents
     const contents = [
       {

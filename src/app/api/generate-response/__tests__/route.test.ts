@@ -84,7 +84,23 @@ describe("POST /api/generate-response", () => {
         expect(GoogleGenAI).not.toHaveBeenCalled();
       });
     });
+    describe("and request is invalid JSON", () => {
+      it("returns 400", async () => {
+        const request = new NextRequest("http://localhost/api/generate-response", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: "INVALID JSON",
+        });
+        const response = await POST(request);
+        const json = await response.json();
+
+        expect(response.status).toBe(400);
+        expect(json.error).toBe("Invalid JSON");
+        expect(GoogleGenAI).not.toHaveBeenCalled();
+      });
+    });
   });
+
   describe("when rate limit is exceeded", () => {
     describe("and request is valid", () => {
       it("returns 429", async () => {
