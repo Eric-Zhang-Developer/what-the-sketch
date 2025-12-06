@@ -5,6 +5,7 @@ import { checkGuess } from "@/utils/check-guess";
 import { Trash2 } from "lucide-react";
 import { useGameStore } from "@/store/gameStore";
 import Button from "./Button";
+import GeminiAPICall from "@/utils/gemini-api-call";
 
 function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   const canvasRef = useRef<ReactSketchCanvasRef>(null);
@@ -61,35 +62,18 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
     const fullDataURI = await canvasRef.current.exportImage("png");
     const rawBase64Data = fullDataURI.split(",")[1];
 
-    try {
-      // API Call
+    // API Call
+    const result = await GeminiAPICall(rawBase64Data);
 
-      const response = await fetch("/api/generate-response", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: rawBase64Data }),
-      });
+    setResponse(result.response);
+    setTurnCycleState(TurnCycleState.ShowingResult);
 
-      // To-Do : More Robust Error Handling, write tests for this function.
-      // Better idea is to separate this try catch block into its own function
-      if (!response.ok) {
-        throw new Error(`API Error: ${response.status} `);
-      }
-
-      const result = await response.json();
-
-      setResponse(result.response);
-      setTurnCycleState(TurnCycleState.ShowingResult);
-
-      // Guess Check
-      if (checkGuess(result.response, currentDrawingPrompt)) {
-        setGuessState(GuessState.Correct);
-        incrementCorrectGuesses();
-      } else {
-        setGuessState(GuessState.Incorrect);
-      }
-    } catch (error) {
-      console.error(error);
+    // Guess Check
+    if (checkGuess(result.response, currentDrawingPrompt)) {
+      setGuessState(GuessState.Correct);
+      incrementCorrectGuesses();
+    } else {
+      setGuessState(GuessState.Incorrect);
     }
   }
 
