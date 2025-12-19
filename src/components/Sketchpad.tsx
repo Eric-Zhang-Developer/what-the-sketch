@@ -1,6 +1,6 @@
 import { useRef, forwardRef, useImperativeHandle, type Ref } from "react";
 import { ReactSketchCanvas, ReactSketchCanvasRef } from "react-sketch-canvas";
-import { GuessState, SketchpadRef, TurnCycleState, ApiResult } from "@/utils/types";
+import { GuessState, SketchpadRef, TurnCycleState } from "@/utils/types";
 import { checkGuess } from "@/utils/check-guess";
 import { Trash2 } from "lucide-react";
 import { useGameStore } from "@/store/gameStore";
