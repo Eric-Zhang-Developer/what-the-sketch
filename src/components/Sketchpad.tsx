@@ -1,6 +1,6 @@
 import { useRef, forwardRef, useImperativeHandle, type Ref } from "react";
 import { ReactSketchCanvas, ReactSketchCanvasRef } from "react-sketch-canvas";
-import { GuessState, SketchpadRef, TurnCycleState } from "@/utils/types";
+import { GuessState, SketchpadRef, TurnCycleState, ApiResult } from "@/utils/types";
 import { checkGuess } from "@/utils/check-guess";
 import { Trash2 } from "lucide-react";
 import { useGameStore } from "@/store/gameStore";
@@ -65,15 +65,23 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
     // API Call
     const result = await GeminiAPICall(rawBase64Data);
 
-    setResponse(result.response);
-    setTurnCycleState(TurnCycleState.ShowingResult);
+    if (result.success) {
+      setResponse(result.data.response);
+      setTurnCycleState(TurnCycleState.ShowingResult);
 
-    // Guess Check
-    if (checkGuess(result.response, currentDrawingPrompt)) {
-      setGuessState(GuessState.Correct);
-      incrementCorrectGuesses();
+      // Guess Check
+      if (checkGuess(result.data.response, currentDrawingPrompt)) {
+        setGuessState(GuessState.Correct);
+        incrementCorrectGuesses();
+      } else {
+        setGuessState(GuessState.Incorrect);
+      }
     } else {
-      setGuessState(GuessState.Incorrect);
+      // TODO: now that errors properly propagate up all the way to the component
+      // User needs to be shown
+
+      // Placeholder for now
+      console.error(result.error);
     }
   }
 
