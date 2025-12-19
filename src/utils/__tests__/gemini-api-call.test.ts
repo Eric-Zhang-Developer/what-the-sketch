@@ -31,5 +31,11 @@ describe("Gemini API Call Function Tests", () => {
       const result = await GeminiAPICall("fake-base64-data");
       expect(result).toEqual({ success: false, error: "Failed to Fetch" });
     });
+
+    it("should handle non Error throws gracefully", async () => {
+      vi.spyOn(globalThis, "fetch").mockRejectedValue(67);
+      const result = await GeminiAPICall("fake-base64-data");
+      expect(result).toEqual({ success: false, error: "An unexpected error occurred" });
+    });
   });
 });
