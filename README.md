@@ -12,7 +12,7 @@
 [![Eslint](https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)](https://eslint.org/)
 [![Turborepo](https://img.shields.io/badge/-Turborepo-EF4444?style=for-the-badge&logo=turborepo&logoColor=white)](https://turborepo.org/)
 
-![Test Coverage](https://img.shields.io/badge/Coverage-83.5%25-green?style=for-the-badge)
+![Test Coverage](https://img.shields.io/badge/Coverage-94.8%25-brightgreen?style=for-the-badge)
 
 [![CI Checks](https://img.shields.io/github/actions/workflow/status/eric-zhang-developer/ai-pictionary/node.js.yml?style=for-the-badge&logo=github&logoColor=white)](https://github.com/eric-zhang-developer/ai-pictionary/actions/workflows/node.js.yml)
 
