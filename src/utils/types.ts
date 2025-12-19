@@ -61,3 +61,7 @@ export interface RateLimitResult {
   limited: boolean;
   error?: string;
 }
+
+export type ApiResult =
+  | { success: true; data: { response: string } }
+  | { success: false; error: string };
