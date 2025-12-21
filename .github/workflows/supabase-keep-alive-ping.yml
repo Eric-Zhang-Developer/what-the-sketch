@@ -1,0 +1,19 @@
+name: Supabase Keep-Alive Ping
+on:
+  schedule:
+    # Runs at 00:00 UTC every Sunday, Wednesday, and Friday
+    - cron: "0 0 * * 0,3,5"
+  workflow_dispatch:
+
+jobs:
+  ping_db:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          curl -f -X GET "$NEXT_PUBLIC_SUPABASE_URL/rest/v1/supabase_ping?select=id&limit=1" \
+          -H "apikey: $NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" \
+          -H "Authorization: Bearer $NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
