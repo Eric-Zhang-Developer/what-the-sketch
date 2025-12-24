@@ -77,11 +77,8 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
         setGuessState(GuessState.Incorrect);
       }
     } else {
-      // TODO: now that errors properly propagate up all the way to the component
-      // User needs to be shown
-
-      // Placeholder for now
-      console.error(result.error);
+      // Error UI for User
+      setTurnCycleState(TurnCycleState.Error);
     }
   }
 
