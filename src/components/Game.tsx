@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { SketchpadRef, TurnCycleState } from "@/utils/types";
 import TurnResultSection from "@/components/TurnResultSection";
 import Sketchpad from "@/components/Sketchpad";
+import TurnErrorSection from "./TurnErrorSection";
 
 export default function Game() {
   const turnCycleState = useGameStore((state) => state.turnCycleState);
@@ -24,7 +25,7 @@ export default function Game() {
       <TurnResultSection onNextPromptClick={onNextPromptClick}></TurnResultSection>
     ),
     [TurnCycleState.Loading]: <div>Loading...</div>,
-    [TurnCycleState.Error]: <div>Error</div>,
+    [TurnCycleState.Error]: <TurnErrorSection></TurnErrorSection>,
   };
   return (
     <>

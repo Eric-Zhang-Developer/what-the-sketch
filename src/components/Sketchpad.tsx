@@ -15,6 +15,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   const currentDrawingPrompt = useGameStore((state) => state.currentDrawingPrompt);
   const setGuessState = useGameStore((state) => state.setGuessState);
   const incrementCorrectGuesses = useGameStore((state) => state.incrementCorrectGuesses);
+  const setErrorMessage = useGameStore((state) => state.setErrorMessage);
 
   const isCanvasDisabled = turnCycleState !== TurnCycleState.Drawing;
 
@@ -79,6 +80,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
     } else {
       // Error UI for User
       setTurnCycleState(TurnCycleState.Error);
+      setErrorMessage(result.error);
     }
   }
 
