@@ -15,6 +15,7 @@ export default function TurnErrorSection() {
       style={{
         boxShadow: `4px 6px 0px 0px rgba(239, 68, 68, 1)`,
       }}
+      data-testid="turn-error-section"
     >
       <TriangleAlert size={48}></TriangleAlert>
       <span className="text-2xl">Whoops!</span>

@@ -122,6 +122,34 @@ describe("Core Game Tests", () => {
     expect(nextPromptButton).not.toBeInTheDocument();
   });
 
+  it("should display error section when API Fails", async () => {
+    // Override JUST for this test's fetch call
+    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+      new Response(JSON.stringify({ error: "You have exceeded your daily limit." }), {
+        status: 429,
+      })
+    );
+
+    render(<Home></Home>);
+    const user = userEvent.setup();
+    const startGameButton = screen.getByText("Start Game!");
+
+    await user.click(startGameButton);
+    const submitButton = await screen.findByText("Submit Drawing");
+
+    await user.click(submitButton);
+
+    const errorSection = await screen.findByTestId("turn-error-section");
+    const tryAgainButton = await screen.findByText("Try Again");
+    const errorMessage = await screen.findByText("You have exceeded your daily limit.");
+
+    await user.click(tryAgainButton);
+
+    expect(errorSection).not.toBeInTheDocument();
+    expect(errorMessage).not.toBeInTheDocument();
+    expect(tryAgainButton).not.toBeInTheDocument();
+  });
+
   // TODO: Maybe write a test to check if button disability works?
 });
 
