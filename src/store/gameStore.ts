@@ -10,6 +10,7 @@ export const initialState = {
   currentDrawingPrompt: "",
   roundNumber: 1,
   correctGuesses: 0,
+  errorMessage: "",
 };
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -58,5 +59,9 @@ export const useGameStore = create<GameStore>((set) => ({
     if (useGameStore.getState().roundNumber > 5) {
       set({ gameState: GameState.Results });
     }
+  },
+
+  setErrorMessage: (newErrorMessage) => {
+    set({ errorMessage: newErrorMessage });
   },
 }));

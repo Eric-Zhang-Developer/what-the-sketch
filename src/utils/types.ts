@@ -55,6 +55,9 @@ export interface GameStore {
   setCorrectGuesses: (newCorrectGuesses: number) => void;
 
   handleNextPrompt: () => void;
+
+  errorMessage: string;
+  setErrorMessage: (newErrorMessage: string) => void;
 }
 
 export interface RateLimitResult {
