@@ -111,7 +111,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
         <div className={isCanvasDisabled ? "pointer-events-none" : ""}>
           <ReactSketchCanvas
             className=""
-            height="400px"
+            height="60vh"
             strokeWidth={4}
             strokeColor="black"
             ref={canvasRef}
