@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { GameState, GameStore, GuessState, TurnCycleState } from "@/utils/types";
 import { getRandomPrompt } from "@/utils/get-random-prompt";
+import { devtools } from "zustand/middleware";
 
 export const initialState = {
   response: "",
@@ -13,55 +14,57 @@ export const initialState = {
   errorMessage: "",
 };
 
-export const useGameStore = create<GameStore>((set) => ({
-  ...initialState,
+export const useGameStore = create<GameStore>()(
+  devtools((set) => ({
+    ...initialState,
 
-  setResponse: (newResponse) => {
-    set({ response: newResponse });
-  },
+    setResponse: (newResponse) => {
+      set({ response: newResponse });
+    },
 
-  setGuessState: (newGuessState) => {
-    set({ guessState: newGuessState });
-  },
+    setGuessState: (newGuessState) => {
+      set({ guessState: newGuessState });
+    },
 
-  setGameState: (newGameState) => {
-    set({ gameState: newGameState });
-  },
+    setGameState: (newGameState) => {
+      set({ gameState: newGameState });
+    },
 
-  setTurnCycleState: (newTurnCycleState) => {
-    set({ turnCycleState: newTurnCycleState });
-  },
+    setTurnCycleState: (newTurnCycleState) => {
+      set({ turnCycleState: newTurnCycleState });
+    },
 
-  setCurrentDrawingPrompt: (newCurrentDrawingPrompt) => {
-    set({ currentDrawingPrompt: newCurrentDrawingPrompt });
-  },
+    setCurrentDrawingPrompt: (newCurrentDrawingPrompt) => {
+      set({ currentDrawingPrompt: newCurrentDrawingPrompt });
+    },
 
-  incrementCorrectGuesses: () => {
-    set((state) => ({ correctGuesses: state.correctGuesses + 1 }));
-  },
+    incrementCorrectGuesses: () => {
+      set((state) => ({ correctGuesses: state.correctGuesses + 1 }));
+    },
 
-  setCorrectGuesses: (newCorrectGuesses) => {
-    set({ correctGuesses: newCorrectGuesses });
-  },
+    setCorrectGuesses: (newCorrectGuesses) => {
+      set({ correctGuesses: newCorrectGuesses });
+    },
 
-  setRoundNumber: (newRoundNumber) => {
-    set({ roundNumber: newRoundNumber });
-  },
+    setRoundNumber: (newRoundNumber) => {
+      set({ roundNumber: newRoundNumber });
+    },
 
-  handleNextPrompt: () => {
-    set({ currentDrawingPrompt: getRandomPrompt() });
-    set({ guessState: GuessState.Pending });
-    set({ turnCycleState: TurnCycleState.Drawing });
-    set({ response: "" });
-    set((state) => ({ roundNumber: state.roundNumber + 1 }));
+    handleNextPrompt: () => {
+      set({ currentDrawingPrompt: getRandomPrompt() });
+      set({ guessState: GuessState.Pending });
+      set({ turnCycleState: TurnCycleState.Drawing });
+      set({ response: "" });
+      set((state) => ({ roundNumber: state.roundNumber + 1 }));
 
-    // End Game Logic
-    if (useGameStore.getState().roundNumber > 5) {
-      set({ gameState: GameState.Results });
-    }
-  },
+      // End Game Logic
+      if (useGameStore.getState().roundNumber > 5) {
+        set({ gameState: GameState.Results });
+      }
+    },
 
-  setErrorMessage: (newErrorMessage) => {
-    set({ errorMessage: newErrorMessage });
-  },
-}));
+    setErrorMessage: (newErrorMessage) => {
+      set({ errorMessage: newErrorMessage });
+    },
+  }))
+);
