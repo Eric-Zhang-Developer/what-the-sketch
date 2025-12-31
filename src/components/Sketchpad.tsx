@@ -16,6 +16,8 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   const setGuessState = useGameStore((state) => state.setGuessState);
   const incrementCorrectGuesses = useGameStore((state) => state.incrementCorrectGuesses);
   const setErrorMessage = useGameStore((state) => state.setErrorMessage);
+  const isEraseMode = useGameStore((state) => state.isEraseMode);
+  const setEraseMode = useGameStore((state) => state.setEraseMode);
 
   const isCanvasDisabled = turnCycleState !== TurnCycleState.Drawing;
 
@@ -47,6 +49,13 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   const onUndoClick = () => {
     if (canvasRef.current && !isCanvasDisabled) {
       canvasRef.current.undo();
+    }
+  };
+
+  const onEraseModeClick = () => {
+    if (canvasRef.current && !isCanvasDisabled) {
+      setEraseMode(!isEraseMode);
+      canvasRef.current.eraseMode(isEraseMode);
     }
   };
 
@@ -110,6 +119,9 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
       <div className="flex flex-row gap-4 w-full">
         <Button onClick={handleSubmit} disabled={isCanvasDisabled} className="flex-grow">
           Submit Drawing
+        </Button>
+        <Button onClick={onEraseModeClick}>
+          <div>Erase</div>
         </Button>
         <Button onClick={onUndoClick}>
           <Undo2 size={32}></Undo2>

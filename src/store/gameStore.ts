@@ -12,6 +12,7 @@ export const initialState = {
   roundNumber: 1,
   correctGuesses: 0,
   errorMessage: "",
+  isEraseMode: false,
 };
 
 export const useGameStore = create<GameStore>()(
@@ -65,6 +66,10 @@ export const useGameStore = create<GameStore>()(
 
     setErrorMessage: (newErrorMessage) => {
       set({ errorMessage: newErrorMessage });
+    },
+
+    setEraseMode(newEraseMode) {
+      set({ isEraseMode: newEraseMode });
     },
   }))
 );
