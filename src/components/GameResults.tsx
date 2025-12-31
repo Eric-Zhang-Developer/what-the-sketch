@@ -15,10 +15,11 @@ export default function GameResults() {
   };
 
   return (
-    <main className="container mx-auto flex flex-col items-center gap-10 justify-center pt-40">
-      <h1 className="text-5xl">Results</h1>
-      <h2 className="text-4xl">You got {correctGuesses} out of 5 prompts right!</h2>
-      <Button onClick={handlePlayAgain}>Play Again</Button>
+    <main className="container mx-auto flex flex-col items-center gap-10 justify-center pt-40 px-6">
+      <h1 className="text-6xl text-center">You got {correctGuesses} out of 5 prompts right!</h1>
+      <Button onClick={handlePlayAgain} className="text-3xl">
+        Play Again
+      </Button>
     </main>
   );
 }

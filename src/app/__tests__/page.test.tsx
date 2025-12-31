@@ -1,4 +1,4 @@
-import { describe, expect, it, afterEach, vi } from "vitest";
+import { describe, expect, it, afterEach, vi, beforeAll } from "vitest";
 import Home from "../page";
 import { render, screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -9,6 +9,11 @@ import { GameState } from "@/utils/types";
 afterEach(() => {
   cleanup();
   useGameStore.setState(initialState);
+});
+
+// Mock scrollIntoView because browser DOM API does not work in jsdom.
+beforeAll(() => {
+  Element.prototype.scrollIntoView = vi.fn();
 });
 
 // This catches all fetches and returns the hard coded response with a success and cat!
@@ -170,11 +175,9 @@ describe("Results Screen Tests", () => {
     const nextPromptButton = await screen.findByText("Next Prompt");
     await user.click(nextPromptButton);
 
-    const results = screen.getByText("Results");
     const correctGuesses = screen.getByText("You got 4 out of 5 prompts right!");
     const playAgainButton = screen.getByText("Play Again");
 
-    expect(results).toBeInTheDocument();
     expect(correctGuesses).toBeInTheDocument();
     expect(playAgainButton).toBeInTheDocument();
   });

@@ -111,7 +111,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
         <div className={isCanvasDisabled ? "pointer-events-none" : ""}>
           <ReactSketchCanvas
             className=""
-            height="400px"
+            height="60vh"
             strokeWidth={4}
             strokeColor="black"
             ref={canvasRef}
@@ -119,10 +119,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
         </div>
       </div>
 
-      <div className="flex flex-row gap-4 w-full">
-        <Button onClick={handleSubmit} disabled={isCanvasDisabled} className="flex-grow">
-          Submit Drawing
-        </Button>
+      <div className="flex flex-row flex-wrap gap-4 w-full justify-center">
         <Button
           onClick={onEraseModeClick}
           variant={isEraseMode ? "danger" : "primary"}
@@ -140,6 +137,13 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
           variant="danger"
         >
           <Trash2 size={32}></Trash2>
+        </Button>
+        <Button
+          onClick={handleSubmit}
+          disabled={isCanvasDisabled}
+          className="w-full md:flex-grow md:w-auto"
+        >
+          Submit Drawing
         </Button>
       </div>
     </>
