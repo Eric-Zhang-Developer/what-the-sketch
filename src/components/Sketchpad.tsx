@@ -119,8 +119,12 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
         </div>
       </div>
 
-      <div className="flex flex-row gap-4 w-full">
-        <Button onClick={handleSubmit} disabled={isCanvasDisabled} className="flex-grow">
+      <div className="flex flex-row flex-wrap gap-4 w-full justify-center">
+        <Button
+          onClick={handleSubmit}
+          disabled={isCanvasDisabled}
+          className="w-full md:flex-grow md:w-auto"
+        >
           Submit Drawing
         </Button>
         <Button
