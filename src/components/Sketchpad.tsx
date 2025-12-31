@@ -121,13 +121,6 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
 
       <div className="flex flex-row flex-wrap gap-4 w-full justify-center">
         <Button
-          onClick={handleSubmit}
-          disabled={isCanvasDisabled}
-          className="w-full md:flex-grow md:w-auto"
-        >
-          Submit Drawing
-        </Button>
-        <Button
           onClick={onEraseModeClick}
           variant={isEraseMode ? "danger" : "primary"}
           disabled={isCanvasDisabled}
@@ -144,6 +137,13 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
           variant="danger"
         >
           <Trash2 size={32}></Trash2>
+        </Button>
+        <Button
+          onClick={handleSubmit}
+          disabled={isCanvasDisabled}
+          className="w-full md:flex-grow md:w-auto"
+        >
+          Submit Drawing
         </Button>
       </div>
     </>
