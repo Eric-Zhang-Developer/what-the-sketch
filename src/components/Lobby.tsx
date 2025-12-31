@@ -10,7 +10,7 @@ export default function Lobby() {
   };
 
   return (
-    <main className="container mx-auto flex flex-col items-center gap-10 justify-center pt-20">
+    <main className="container mx-auto flex flex-col items-center gap-10 justify-center pt-20 px-4">
       <Image
         aria-label="what-the-sketch-banner"
         src="/banner.webp"
