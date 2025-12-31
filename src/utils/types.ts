@@ -58,6 +58,9 @@ export interface GameStore {
 
   errorMessage: string;
   setErrorMessage: (newErrorMessage: string) => void;
+
+  isEraseMode: boolean;
+  setEraseMode: (newIsEraseMode: boolean) => void;
 }
 
 export interface RateLimitResult {

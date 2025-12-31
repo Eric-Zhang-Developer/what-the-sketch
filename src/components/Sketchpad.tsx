@@ -2,7 +2,7 @@ import { useRef, forwardRef, useImperativeHandle, type Ref } from "react";
 import { ReactSketchCanvas, ReactSketchCanvasRef } from "react-sketch-canvas";
 import { GuessState, SketchpadRef, TurnCycleState } from "@/utils/types";
 import { checkGuess } from "@/utils/check-guess";
-import { Trash2 } from "lucide-react";
+import { Trash2, Undo2, Pencil, Eraser } from "lucide-react";
 import { useGameStore } from "@/store/gameStore";
 import Button from "./Button";
 import GeminiAPICall from "@/utils/gemini-api-call";
@@ -16,6 +16,8 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   const setGuessState = useGameStore((state) => state.setGuessState);
   const incrementCorrectGuesses = useGameStore((state) => state.incrementCorrectGuesses);
   const setErrorMessage = useGameStore((state) => state.setErrorMessage);
+  const isEraseMode = useGameStore((state) => state.isEraseMode);
+  const setEraseMode = useGameStore((state) => state.setEraseMode);
 
   const isCanvasDisabled = turnCycleState !== TurnCycleState.Drawing;
 
@@ -44,9 +46,24 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
     }
   };
 
-  // Currently this function as well as the API function is very very janky. This is Proof of Concept Code
-  // The core code itself is fine however there are no guard rails and the code is a nightmare to debug
-  // To-do: write tests
+  const onUndoClick = () => {
+    if (canvasRef.current && !isCanvasDisabled) {
+      canvasRef.current.undo();
+    }
+  };
+
+  const onEraseModeClick = () => {
+    if (canvasRef.current && !isCanvasDisabled) {
+      const newEraseMode = !isEraseMode;
+      setEraseMode(newEraseMode);
+      canvasRef.current.eraseMode(newEraseMode);
+    }
+  };
+
+  /**
+   * Exports canvas to base64 and asks Gemini to guess the drawing.
+   * Updates UI state based on whether the AI correctly identified the prompt.
+   */
   async function handleSubmit() {
     if (!canvasRef.current) {
       console.error("Canvas ref is not available yet");
@@ -90,20 +107,31 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
         role="game"
         className="w-full border-4 rounded-3xl bg-white overflow-hidden border-black shadow-[6px_8px_0px_0px_rgba(0,0,0,1)]"
       >
-        {/* There is a minor bug here, react sketch canvas has no way to freeze the canvas and prevent the user from drawing
-        this means the user can draw on the canvas after the drawing stage */}
-        <ReactSketchCanvas
-          className=""
-          height="400px"
-          strokeWidth={4}
-          strokeColor="black"
-          ref={canvasRef}
-        ></ReactSketchCanvas>
+        {/* This wrapper div disables the canvas when needed */}
+        <div className={isCanvasDisabled ? "pointer-events-none" : ""}>
+          <ReactSketchCanvas
+            className=""
+            height="400px"
+            strokeWidth={4}
+            strokeColor="black"
+            ref={canvasRef}
+          ></ReactSketchCanvas>
+        </div>
       </div>
 
       <div className="flex flex-row gap-4 w-full">
         <Button onClick={handleSubmit} disabled={isCanvasDisabled} className="flex-grow">
           Submit Drawing
+        </Button>
+        <Button
+          onClick={onEraseModeClick}
+          variant={isEraseMode ? "danger" : "primary"}
+          disabled={isCanvasDisabled}
+        >
+          {isEraseMode ? <Eraser size={32}></Eraser> : <Pencil size={32}></Pencil>}
+        </Button>
+        <Button onClick={onUndoClick} disabled={isCanvasDisabled}>
+          <Undo2 size={32}></Undo2>
         </Button>
         <Button
           aria-label="clear canvas"
