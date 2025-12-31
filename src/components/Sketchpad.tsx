@@ -60,9 +60,10 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
     }
   };
 
-  // Currently this function as well as the API function is very very janky. This is Proof of Concept Code
-  // The core code itself is fine however there are no guard rails and the code is a nightmare to debug
-  // To-do: write tests
+  /**
+   * Exports canvas to base64 and asks Gemini to guess the drawing.
+   * Updates UI state based on whether the AI correctly identified the prompt.
+   */
   async function handleSubmit() {
     if (!canvasRef.current) {
       console.error("Canvas ref is not available yet");
