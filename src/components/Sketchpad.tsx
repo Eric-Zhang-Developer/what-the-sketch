@@ -121,7 +121,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
         <Button onClick={handleSubmit} disabled={isCanvasDisabled} className="flex-grow">
           Submit Drawing
         </Button>
-        <Button onClick={onEraseModeClick}>
+        <Button onClick={onEraseModeClick} variant={isEraseMode ? "danger" : "primary"}>
           {isEraseMode ? <Eraser size={32}></Eraser> : <Pencil size={32}></Pencil>}
         </Button>
         <Button onClick={onUndoClick}>
