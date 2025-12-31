@@ -2,7 +2,7 @@ import { useRef, forwardRef, useImperativeHandle, type Ref } from "react";
 import { ReactSketchCanvas, ReactSketchCanvasRef } from "react-sketch-canvas";
 import { GuessState, SketchpadRef, TurnCycleState } from "@/utils/types";
 import { checkGuess } from "@/utils/check-guess";
-import { Trash2, Undo2 } from "lucide-react";
+import { Trash2, Undo2, Pencil, Eraser } from "lucide-react";
 import { useGameStore } from "@/store/gameStore";
 import Button from "./Button";
 import GeminiAPICall from "@/utils/gemini-api-call";
@@ -54,8 +54,9 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
 
   const onEraseModeClick = () => {
     if (canvasRef.current && !isCanvasDisabled) {
-      setEraseMode(!isEraseMode);
-      canvasRef.current.eraseMode(isEraseMode);
+      const newEraseMode = !isEraseMode;
+      setEraseMode(newEraseMode);
+      canvasRef.current.eraseMode(newEraseMode);
     }
   };
 
@@ -121,7 +122,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
           Submit Drawing
         </Button>
         <Button onClick={onEraseModeClick}>
-          <div>Erase</div>
+          {isEraseMode ? <Eraser size={32}></Eraser> : <Pencil size={32}></Pencil>}
         </Button>
         <Button onClick={onUndoClick}>
           <Undo2 size={32}></Undo2>
