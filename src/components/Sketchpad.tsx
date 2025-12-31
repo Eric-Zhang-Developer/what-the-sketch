@@ -2,7 +2,7 @@ import { useRef, forwardRef, useImperativeHandle, type Ref } from "react";
 import { ReactSketchCanvas, ReactSketchCanvasRef } from "react-sketch-canvas";
 import { GuessState, SketchpadRef, TurnCycleState } from "@/utils/types";
 import { checkGuess } from "@/utils/check-guess";
-import { Trash2 } from "lucide-react";
+import { Trash2, Undo2 } from "lucide-react";
 import { useGameStore } from "@/store/gameStore";
 import Button from "./Button";
 import GeminiAPICall from "@/utils/gemini-api-call";
@@ -41,6 +41,12 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   const onTrashClick = () => {
     if (canvasRef.current && !isCanvasDisabled) {
       canvasRef.current.clearCanvas();
+    }
+  };
+
+  const onUndoClick = () => {
+    if (canvasRef.current && !isCanvasDisabled) {
+      canvasRef.current.undo();
     }
   };
 
@@ -104,6 +110,9 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
       <div className="flex flex-row gap-4 w-full">
         <Button onClick={handleSubmit} disabled={isCanvasDisabled} className="flex-grow">
           Submit Drawing
+        </Button>
+        <Button onClick={onUndoClick}>
+          <Undo2 size={32}></Undo2>
         </Button>
         <Button
           aria-label="clear canvas"
