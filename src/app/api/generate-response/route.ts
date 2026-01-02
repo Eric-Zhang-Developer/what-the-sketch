@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     });
 
     const response = await openRouter.chat.send({
-      model: "google/gemini-2.5-flash",
+      model: "google/gemini-3-flash-preview",
       messages: [
         {
           role: "user",
