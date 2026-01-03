@@ -2,6 +2,7 @@ import { useGameStore } from "@/store/gameStore";
 import { GameState } from "@/utils/types";
 import Image from "next/image";
 import Button from "./Button";
+import DropDownList from "./DropDownList";
 export default function Lobby() {
   const setGameState = useGameStore((state) => state.setGameState);
 
@@ -20,6 +21,7 @@ export default function Lobby() {
         className="w-full max-w-3xl h-auto"
         priority
       ></Image>
+      <DropDownList></DropDownList>
       <Button onClick={handleClick}>Start Game!</Button>
     </main>
   );
