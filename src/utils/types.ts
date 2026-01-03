@@ -61,6 +61,16 @@ export interface GameStore {
 
   isEraseMode: boolean;
   setEraseMode: (newIsEraseMode: boolean) => void;
+
+  promptCategory: PromptCategory;
+  setPromptCategory: (newPromptCategory: PromptCategory) => void;
+}
+
+export enum PromptCategory {
+  Default = "DEFAULT",
+  Objects = "OBJECTS",
+  Animals = "ANIMALS",
+  Places = "PLACES",
 }
 
 export interface RateLimitResult {

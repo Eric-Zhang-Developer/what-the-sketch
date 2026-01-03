@@ -1,10 +1,12 @@
 import { useGameStore } from "@/store/gameStore";
-import { GameState } from "@/utils/types";
+import { GameState, PromptCategory } from "@/utils/types";
 import Image from "next/image";
 import Button from "./Button";
 import DropDownList from "./DropDownList";
 export default function Lobby() {
   const setGameState = useGameStore((state) => state.setGameState);
+  const setPromptCategory = useGameStore((state) => state.setPromptCategory);
+  const promptCategory = useGameStore((state) => state.promptCategory);
 
   const handleClick = () => {
     setGameState(GameState.Game);
@@ -21,7 +23,11 @@ export default function Lobby() {
         className="w-full max-w-3xl h-auto"
         priority
       ></Image>
-      <DropDownList></DropDownList>
+      <DropDownList
+        options={Object.values(PromptCategory)}
+        value={promptCategory}
+        onChange={(value: string) => setPromptCategory(value as PromptCategory)}
+      ></DropDownList>
       <Button onClick={handleClick}>Start Game!</Button>
     </main>
   );
