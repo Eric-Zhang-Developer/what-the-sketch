@@ -164,6 +164,7 @@ describe("Results Screen Tests", () => {
       roundNumber: 5,
       correctGuesses: 4,
       gameState: GameState.Game,
+      currentDrawingPrompt: "Airplane",
     });
 
     render(<Home></Home>);
@@ -187,6 +188,7 @@ describe("Results Screen Tests", () => {
       roundNumber: 5,
       correctGuesses: 4,
       gameState: GameState.Game,
+      currentDrawingPrompt: "Airplane",
     });
     render(<Home></Home>);
 

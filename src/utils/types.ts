@@ -55,12 +55,25 @@ export interface GameStore {
   setCorrectGuesses: (newCorrectGuesses: number) => void;
 
   handleNextPrompt: () => void;
+  startGame: () => void;
 
   errorMessage: string;
   setErrorMessage: (newErrorMessage: string) => void;
 
   isEraseMode: boolean;
   setEraseMode: (newIsEraseMode: boolean) => void;
+
+  promptCategory: PromptCategory;
+  setPromptCategory: (newPromptCategory: PromptCategory) => void;
+}
+
+export enum PromptCategory {
+  Default = "DEFAULT",
+  Objects = "OBJECTS",
+  Animals = "ANIMALS",
+  Nature = "NATURE",
+  Food = "FOOD",
+  Geography = "GEOGRAPHY",
 }
 
 export interface RateLimitResult {

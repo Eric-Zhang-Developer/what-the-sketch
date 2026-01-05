@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { GameState, GameStore, GuessState, TurnCycleState } from "@/utils/types";
+import { GameState, GameStore, GuessState, PromptCategory, TurnCycleState } from "@/utils/types";
 import { getRandomPrompt } from "@/utils/get-random-prompt";
 import { devtools } from "zustand/middleware";
 
@@ -8,6 +8,7 @@ export const initialState = {
   guessState: GuessState.Pending,
   gameState: GameState.Lobby,
   turnCycleState: TurnCycleState.Drawing,
+  promptCategory: PromptCategory.Default,
   currentDrawingPrompt: "",
   roundNumber: 1,
   correctGuesses: 0,
@@ -52,16 +53,29 @@ export const useGameStore = create<GameStore>()(
     },
 
     handleNextPrompt: () => {
-      set({ currentDrawingPrompt: getRandomPrompt() });
-      set({ guessState: GuessState.Pending });
-      set({ turnCycleState: TurnCycleState.Drawing });
-      set({ response: "" });
-      set((state) => ({ roundNumber: state.roundNumber + 1 }));
-
-      // End Game Logic
+      set((state) => ({
+        currentDrawingPrompt: getRandomPrompt(state.promptCategory),
+        guessState: GuessState.Pending,
+        turnCycleState: TurnCycleState.Drawing,
+        response: "",
+        roundNumber: state.roundNumber + 1,
+      }));
       if (useGameStore.getState().roundNumber > 5) {
         set({ gameState: GameState.Results });
       }
+    },
+
+    startGame: () => {
+      set((state) => ({
+        currentDrawingPrompt: getRandomPrompt(state.promptCategory),
+        gameState: GameState.Game,
+        turnCycleState: TurnCycleState.Drawing,
+        guessState: GuessState.Pending,
+        roundNumber: 1,
+        correctGuesses: 0,
+        response: "",
+        errorMessage: "",
+      }));
     },
 
     setErrorMessage: (newErrorMessage) => {
@@ -70,6 +84,10 @@ export const useGameStore = create<GameStore>()(
 
     setEraseMode(newEraseMode) {
       set({ isEraseMode: newEraseMode });
+    },
+
+    setPromptCategory(newPromptCategory) {
+      set({ promptCategory: newPromptCategory });
     },
   }))
 );
