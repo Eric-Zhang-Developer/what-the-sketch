@@ -53,21 +53,21 @@ export const useGameStore = create<GameStore>()(
     },
 
     handleNextPrompt: () => {
-      set((state) => ({ currentDrawingPrompt: getRandomPrompt(state.promptCategory) }));
-      set({ guessState: GuessState.Pending });
-      set({ turnCycleState: TurnCycleState.Drawing });
-      set({ response: "" });
-      set((state) => ({ roundNumber: state.roundNumber + 1 }));
-
-      // End Game Logic
+      set((state) => ({
+        currentDrawingPrompt: getRandomPrompt(state.promptCategory),
+        guessState: GuessState.Pending,
+        turnCycleState: TurnCycleState.Drawing,
+        response: "",
+        roundNumber: state.roundNumber + 1,
+      }));
       if (useGameStore.getState().roundNumber > 5) {
         set({ gameState: GameState.Results });
       }
     },
 
     startGame: () => {
-      set((state) => ({ currentDrawingPrompt: getRandomPrompt(state.promptCategory) }));
-      set({
+      set((state) => ({
+        currentDrawingPrompt: getRandomPrompt(state.promptCategory),
         gameState: GameState.Game,
         turnCycleState: TurnCycleState.Drawing,
         guessState: GuessState.Pending,
@@ -75,7 +75,7 @@ export const useGameStore = create<GameStore>()(
         correctGuesses: 0,
         response: "",
         errorMessage: "",
-      });
+      }));
     },
 
     setErrorMessage: (newErrorMessage) => {
