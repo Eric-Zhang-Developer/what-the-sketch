@@ -73,6 +73,7 @@ export enum PromptCategory {
   Animals = "ANIMALS",
   Nature = "NATURE",
   Food = "FOOD",
+  Geography = "GEOGRAPHY",
 }
 
 export interface RateLimitResult {
