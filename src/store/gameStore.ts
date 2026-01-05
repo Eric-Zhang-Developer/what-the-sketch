@@ -53,7 +53,7 @@ export const useGameStore = create<GameStore>()(
     },
 
     handleNextPrompt: () => {
-      set({ currentDrawingPrompt: getRandomPrompt(/* TODO: Category */) });
+      set((state) => ({ currentDrawingPrompt: getRandomPrompt(state.promptCategory) }));
       set({ guessState: GuessState.Pending });
       set({ turnCycleState: TurnCycleState.Drawing });
       set({ response: "" });
@@ -66,9 +66,9 @@ export const useGameStore = create<GameStore>()(
     },
 
     startGame: () => {
+      set((state) => ({ currentDrawingPrompt: getRandomPrompt(state.promptCategory) }));
       set({
         gameState: GameState.Game,
-        currentDrawingPrompt: getRandomPrompt(/* TODO: Category */),
         turnCycleState: TurnCycleState.Drawing,
         guessState: GuessState.Pending,
         roundNumber: 1,
