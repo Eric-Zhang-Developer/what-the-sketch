@@ -55,6 +55,7 @@ export interface GameStore {
   setCorrectGuesses: (newCorrectGuesses: number) => void;
 
   handleNextPrompt: () => void;
+  startGame: () => void;
 
   errorMessage: string;
   setErrorMessage: (newErrorMessage: string) => void;
