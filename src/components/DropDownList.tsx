@@ -7,10 +7,15 @@ export default function DropDownList({
   onChange,
 }: {
   options: string[];
-  value: string | null;
+  value: string;
   onChange: (value: string) => void;
 }) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  /**
+   * Purpose is to turn an enum into proper casing example "ANIMALS" → "Animals"
+   */
+  const formatForDisplay = (value: string) => value.charAt(0) + value.slice(1).toLowerCase();
 
   const handleClick = () => {
     setIsVisible(!isVisible);
@@ -33,7 +38,7 @@ export default function DropDownList({
             size={20}
             strokeWidth={2.5}
           ></ChevronDown>
-          Category: {value}
+          Category: {formatForDisplay(value)}
         </div>
       </button>
       {isVisible && (
