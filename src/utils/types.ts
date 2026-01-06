@@ -65,6 +65,9 @@ export interface GameStore {
 
   promptCategory: PromptCategory;
   setPromptCategory: (newPromptCategory: PromptCategory) => void;
+
+  aiPersonality: AIPersonality;
+  setAiPersonality: (newAIPersonality: AIPersonality) => void;
 }
 
 export const PROMPT_CATEGORIES = [
@@ -77,6 +80,9 @@ export const PROMPT_CATEGORIES = [
 ] as const;
 
 export type PromptCategory = (typeof PROMPT_CATEGORIES)[number];
+
+export const AI_PERSONALITIES = ["Default", "Caveman", "Haiku Poet"] as const;
+export type AIPersonality = (typeof AI_PERSONALITIES)[number];
 
 export interface RateLimitResult {
   limited: boolean;
