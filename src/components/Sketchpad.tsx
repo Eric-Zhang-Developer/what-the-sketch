@@ -105,7 +105,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
     <>
       <div
         role="game"
-        className="w-full border-4 rounded-3xl bg-white overflow-hidden border-black shadow-[6px_8px_0px_0px_rgba(0,0,0,1)]"
+        className="w-full border-4 rounded-3xl bg-white overflow-hidden border-light-foreground shadow-[6px_8px_0px_0px_rgba(0,0,0,1)]"
       >
         {/* This wrapper div disables the canvas when needed */}
         <div className={isCanvasDisabled ? "pointer-events-none" : ""}>

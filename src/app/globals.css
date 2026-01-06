@@ -2,8 +2,8 @@
 
 /*  For some reason media query does not work with assigning variables so this uses tailwind dark: */
 :root {
-  --dark-foreground: #fafafa; /* zinc-900 */
-  --dark-background: #18181b; /* zinc-50 */
+  --dark-foreground: #fafafa; /* zinc-50 */
+  --dark-background: #18181b; /* zinc-900 */
   --light-foreground: #18181b;
   --light-background: #fafafa;
 }

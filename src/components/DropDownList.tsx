@@ -22,8 +22,9 @@ export default function DropDownList({
   };
 
   const BASE_STYLES = [
-    "rounded-xl text-xl font-bold text-black bg-slate-50", // Layout & Text
-    "border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]", // Borders & Shadows
+    "rounded-xl text-xl font-bold text-light-foreground bg-light-background", // Layout & Text
+    "border-2 border-light-foreground shadow-[4px_4px_0px_0px_#18181b]", // Borders & Shadows
+    "dark:border-dark-foreground dark:bg-dark-background dark:text-dark-foreground dark:shadow-[4px_4px_0px_0px_#fafafa]",
     "transition-all duration-75 hover:cursor-pointer", // State & Animation
   ].join(" ");
 

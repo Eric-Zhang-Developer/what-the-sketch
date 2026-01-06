@@ -40,7 +40,7 @@ export default function Game() {
   };
   return (
     <>
-      <div className="flex items-center justify-center flex-col gap-5 container mx-auto py-5 px-4">
+      <div className="flex items-center justify-center flex-col gap-5 container mx-auto py-5 px-4 text-light-foreground dark:text-dark-foreground">
         <h1 className="text-5xl sm:text-6xl text-center" aria-label="prompt">
           Draw a {currentDrawingPrompt}
         </h1>

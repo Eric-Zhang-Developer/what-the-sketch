@@ -16,7 +16,7 @@ export default function Lobby() {
         alt="What the Sketch? Banner"
         width={900}
         height={314}
-        className="w-full max-w-3xl h-auto"
+        className="w-full max-w-3xl h-auto dark:invert"
         priority
       ></Image>
       <DropDownList
