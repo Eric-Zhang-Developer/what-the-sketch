@@ -6,7 +6,7 @@ export default function DropDownList({
   value,
   onChange,
 }: {
-  options: string[];
+  options: readonly string[];
   value: string;
   onChange: (value: string) => void;
 }) {

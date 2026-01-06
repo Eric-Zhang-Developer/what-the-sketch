@@ -11,7 +11,7 @@ import { PromptCategory } from "./types";
 
 export const getRandomPrompt = (category: PromptCategory): string => {
   const pool =
-    category === PromptCategory.Default
+    category === "Default"
       ? DRAWING_PROMPTS
       : DRAWING_PROMPTS.filter((p) => p.category === category);
 
