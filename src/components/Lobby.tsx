@@ -1,5 +1,5 @@
 import { useGameStore } from "@/store/gameStore";
-import { PromptCategory } from "@/utils/types";
+import { PROMPT_CATEGORIES, PromptCategory } from "@/utils/types";
 import Image from "next/image";
 import Button from "./Button";
 import DropDownList from "./DropDownList";
@@ -20,7 +20,7 @@ export default function Lobby() {
         priority
       ></Image>
       <DropDownList
-        options={Object.values(PromptCategory)}
+        options={PROMPT_CATEGORIES}
         value={promptCategory}
         onChange={(value: string) => setPromptCategory(value as PromptCategory)}
       ></DropDownList>

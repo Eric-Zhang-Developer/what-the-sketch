@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { GameState, GameStore, GuessState, PromptCategory, TurnCycleState } from "@/utils/types";
+import { GameState, GameStore, GuessState, TurnCycleState } from "@/utils/types";
 import { getRandomPrompt } from "@/utils/get-random-prompt";
 import { devtools } from "zustand/middleware";
 
@@ -8,7 +8,7 @@ export const initialState = {
   guessState: GuessState.Pending,
   gameState: GameState.Lobby,
   turnCycleState: TurnCycleState.Drawing,
-  promptCategory: PromptCategory.Default,
+  promptCategory: "Default",
   currentDrawingPrompt: "",
   roundNumber: 1,
   correctGuesses: 0,

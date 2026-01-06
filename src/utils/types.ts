@@ -67,14 +67,16 @@ export interface GameStore {
   setPromptCategory: (newPromptCategory: PromptCategory) => void;
 }
 
-export enum PromptCategory {
-  Default = "DEFAULT",
-  Objects = "OBJECTS",
-  Animals = "ANIMALS",
-  Nature = "NATURE",
-  Food = "FOOD",
-  Geography = "GEOGRAPHY",
-}
+export const PROMPT_CATEGORIES = [
+  "Default",
+  "Objects",
+  "Animals",
+  "Nature",
+  "Food",
+  "Geography",
+] as const;
+
+export type PromptCategory = (typeof PROMPT_CATEGORIES)[number];
 
 export interface RateLimitResult {
   limited: boolean;
