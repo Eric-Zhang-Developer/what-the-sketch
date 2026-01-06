@@ -114,6 +114,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
             height="60vh"
             strokeWidth={4}
             strokeColor="black"
+            canvasColor="#fafafa"
             ref={canvasRef}
           ></ReactSketchCanvas>
         </div>
