@@ -1,6 +1,7 @@
 import { useGameStore } from "@/store/gameStore";
 import { GameState } from "@/utils/types";
 import Button from "./ui/Button";
+import Confetti from "./ui/Confetti";
 export default function GameResults() {
   const setGameState = useGameStore((state) => state.setGameState);
   const setRoundNumber = useGameStore((state) => state.setRoundNumber);
@@ -20,6 +21,7 @@ export default function GameResults() {
       <Button onClick={handlePlayAgain} className="text-3xl">
         Play Again
       </Button>
+      <Confetti></Confetti>
     </main>
   );
 }

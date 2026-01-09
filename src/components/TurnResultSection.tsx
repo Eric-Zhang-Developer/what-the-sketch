@@ -2,17 +2,18 @@ import { useGameStore } from "@/store/gameStore";
 import { TurnResultProps, GuessState } from "@/utils/types";
 import Markdown from "react-markdown";
 import Button from "./ui/Button";
+import Confetti from "./ui/Confetti";
 
 export default function TurnResultSection({ onNextPromptClick }: TurnResultProps) {
   const guessState = useGameStore((state) => state.guessState);
   const response = useGameStore((state) => state.response);
 
+  // TODO: Refactor, this is kinda fragile
   const parts = response.split("My guess is ");
 
   const commentary = parts[0];
   const guess = parts[1];
 
-  // Visual Indicator for guess correctness, this is a placeholder for a more advanced scoring system
   const borderColorMap = {
     [GuessState.Pending]: "border-black",
     [GuessState.Correct]: "border-emerald-500",
@@ -45,8 +46,9 @@ export default function TurnResultSection({ onNextPromptClick }: TurnResultProps
           <Markdown>{guess}</Markdown>
         </div>
       </div>
-
       <Button onClick={onNextPromptClick}>Next Prompt</Button>
+
+      {guessState === GuessState.Correct && <Confetti></Confetti>}
     </>
   );
 }
