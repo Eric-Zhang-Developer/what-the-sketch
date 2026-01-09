@@ -4,7 +4,7 @@ import { GuessState, SketchpadRef, TurnCycleState } from "@/utils/types";
 import { checkGuess } from "@/utils/check-guess";
 import { Trash2, Undo2, Pencil, Eraser } from "lucide-react";
 import { useGameStore } from "@/store/gameStore";
-import Button from "./Button";
+import Button from "./ui/Button";
 import GeminiAPICall from "@/utils/gemini-api-call";
 
 function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {

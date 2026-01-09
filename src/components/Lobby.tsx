@@ -1,8 +1,8 @@
 import { useGameStore } from "@/store/gameStore";
 import { PromptCategory } from "@/utils/types";
 import Image from "next/image";
-import Button from "./Button";
-import DropDownList from "./DropDownList";
+import Button from "./ui/Button";
+import DropDownList from "./ui/DropDownList";
 export default function Lobby() {
   const setPromptCategory = useGameStore((state) => state.setPromptCategory);
   const promptCategory = useGameStore((state) => state.promptCategory);

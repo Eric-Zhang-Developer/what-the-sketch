@@ -1,5 +1,5 @@
 import { useGameStore } from "@/store/gameStore";
-import Button from "./Button";
+import Button from "./ui/Button";
 import { TurnCycleState } from "@/utils/types";
 import { TriangleAlert } from "lucide-react";
 export default function TurnErrorSection() {

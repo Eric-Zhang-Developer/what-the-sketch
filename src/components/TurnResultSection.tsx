@@ -1,7 +1,7 @@
 import { useGameStore } from "@/store/gameStore";
 import { TurnResultProps, GuessState } from "@/utils/types";
 import Markdown from "react-markdown";
-import Button from "./Button";
+import Button from "./ui/Button";
 
 export default function TurnResultSection({ onNextPromptClick }: TurnResultProps) {
   const guessState = useGameStore((state) => state.guessState);

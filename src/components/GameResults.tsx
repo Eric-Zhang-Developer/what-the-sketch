@@ -1,6 +1,6 @@
 import { useGameStore } from "@/store/gameStore";
 import { GameState } from "@/utils/types";
-import Button from "./Button";
+import Button from "./ui/Button";
 export default function GameResults() {
   const setGameState = useGameStore((state) => state.setGameState);
   const setRoundNumber = useGameStore((state) => state.setRoundNumber);
