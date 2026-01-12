@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { ipAddress } from "@vercel/functions";
-import { GoogleGenAI } from "@google/genai";
 import { checkRateLimit } from "@/utils/check-rate-limit";
 import z from "zod";
 import { OpenRouter } from "@openrouter/sdk";
@@ -37,7 +36,7 @@ export async function POST(request: NextRequest) {
   }
   const image = `data:image/png;base64,${result.data.image}`;
 
-  // --- Gemini API Call ---
+  // --- OpenRouter API Call ---
   try {
     // To-do: For future reference for changeable prompts also feed a textPrompt. variable to contents
 
