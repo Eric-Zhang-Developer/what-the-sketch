@@ -12,7 +12,7 @@ const BASE_STYLES = [
   "rounded-xl px-6 sm:px-8 py-3 text-2xl font-bold text-light-foreground", // Layout & Text
   "border-2 border-light-foreground shadow-[4px_4px_0px_0px_#18181b]", // Borders & Shadows
   "transition-all duration-75 active:duration-0 disabled:opacity-50 disabled:cursor-not-allowed hover:cursor-pointer", // State & Animation
-  "dark:text-dark-foreground dark:border-dark-foreground dark:shadow-[4px_4px_0px_0px_#fafafa]", // Dark Mode
+  "dark:text-dark-foreground dark:border-dark-foreground dark:shadow-[4px_4px_0px_0px_#e4e4e7]", // Dark Mode
   "active:shadow-none active:translate-x-[4px] active:translate-y-[4px]", // Active State (Pop effect)
 ].join(" ");
 
