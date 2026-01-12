@@ -20,9 +20,9 @@ export default function TurnResultSection({ onNextPromptClick }: TurnResultProps
   };
 
   const borderShadowColorMap = {
-    [GuessState.Pending]: "0, 0, 0, 1",
-    [GuessState.Correct]: "16, 185, 129, 1",
-    [GuessState.Incorrect]: "239, 68, 68, 1",
+    [GuessState.Pending]: "#000000",
+    [GuessState.Correct]: "#00bc7d",
+    [GuessState.Incorrect]: "#fb2c36",
   };
 
   return (
@@ -30,16 +30,16 @@ export default function TurnResultSection({ onNextPromptClick }: TurnResultProps
       <div
         className={`border-4 p-8 rounded-2xl text-center bg-light-background dark:bg-dark-background flex flex-col gap-4 ${borderColorMap[guessState]}`}
         style={{
-          boxShadow: `4px 6px 0px 0px rgba(${borderShadowColorMap[guessState]})`,
+          boxShadow: `4px 6px 0px 0px ${borderShadowColorMap[guessState]}`,
         }}
         data-testid="turn-result-section"
       >
-        <div className="text-2xl text-zinc-800 dark:text-zinc-200 text-left">
+        <div className="text-2xl text-zinc-800 dark:text-zinc-300 text-left">
           <Markdown>{commentary}</Markdown>
         </div>
 
         {/* Line Separator */}
-        <div className="w-full border-b-2 h-1 border-slate-300 border-double"></div>
+        <div className="w-full border-b-2 h-1 border-zinc-500 border-double"></div>
 
         <div className="text-4xl">
           <Markdown>{guess}</Markdown>
