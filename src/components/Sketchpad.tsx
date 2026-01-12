@@ -1,4 +1,5 @@
 import { useRef, forwardRef, useImperativeHandle, type Ref } from "react";
+import { useMediaQuery } from "usehooks-ts";
 import { ReactSketchCanvas, ReactSketchCanvasRef } from "react-sketch-canvas";
 import { GuessState, SketchpadRef, TurnCycleState } from "@/utils/types";
 import { checkGuess } from "@/utils/check-guess";
@@ -20,6 +21,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   const setEraseMode = useGameStore((state) => state.setEraseMode);
 
   const isCanvasDisabled = turnCycleState !== TurnCycleState.Drawing;
+  const isDark = useMediaQuery("(prefers-color-scheme: dark)");
 
   // For functions that other components / parent need
   useImperativeHandle(
@@ -105,7 +107,8 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
     <>
       <div
         role="game"
-        className="w-full border-4 rounded-3xl bg-white overflow-hidden border-light-foreground shadow-[6px_8px_0px_0px_rgba(0,0,0,1)]"
+        className="w-full border-4 rounded-3xl bg-white overflow-hidden border-light-foreground shadow-[6px_8px_0px_0px_rgba(0,0,0,1)]
+        dark:border-dark-foreground dark:shadow-[6px_8px_0px_0px_#e4e4e7]"
       >
         {/* This wrapper div disables the canvas when needed */}
         <div className={isCanvasDisabled ? "pointer-events-none" : ""}>
@@ -113,8 +116,8 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
             className=""
             height="60vh"
             strokeWidth={4}
-            strokeColor="black"
-            canvasColor="#f4f4f5" // zinc-100
+            strokeColor={isDark ? "#f4f4f5" : "#09090b"} // zinc-100 : zinc-950
+            canvasColor={isDark ? "#18181b" : "#f4f4f5"} // zinc-900 : zinc-100
             ref={canvasRef}
           ></ReactSketchCanvas>
         </div>
