@@ -17,8 +17,8 @@ const BASE_STYLES = [
 ].join(" ");
 
 const VARIANTS = {
-  primary: "bg-blue-400 hover:bg-blue-300",
-  danger: "bg-red-400 hover:bg-red-300",
+  primary: "bg-blue-400 hover:bg-blue-300 dark:bg-blue-500 dark:hover:bg-blue-400",
+  danger: "bg-red-400 hover:bg-red-300 dark:bg-red-500 dark:hover:bg-red-400",
 };
 
 export default function Button({
