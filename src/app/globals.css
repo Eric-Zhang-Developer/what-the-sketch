@@ -29,8 +29,8 @@ body {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #18181b; /* zinc-900 */
-    background-image: linear-gradient(#1e3555 1px, transparent 1px),
-      linear-gradient(90deg, #1e3555 1px, transparent 1px);
+    background-color: #1e1e1e; /* zinc-900 */
+    background-image: linear-gradient(#333333 1px, transparent 1px),
+      linear-gradient(90deg, #333333 1px, transparent 1px);
   }
 }
