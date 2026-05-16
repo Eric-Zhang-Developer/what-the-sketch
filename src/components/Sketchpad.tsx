@@ -1,4 +1,4 @@
-import { useRef, forwardRef, useImperativeHandle, type Ref } from "react";
+import { useCallback, useRef, forwardRef, useImperativeHandle, type Ref } from "react";
 import { ReactSketchCanvas, ReactSketchCanvasRef } from "react-sketch-canvas";
 import { GuessState, SketchpadRef, TurnCycleState } from "@/utils/types";
 import { checkGuess } from "@/utils/check-guess";
@@ -21,6 +21,13 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
 
   const isCanvasDisabled = turnCycleState !== TurnCycleState.Drawing;
 
+  // This clear canvas is passed upward to the game.tsx, it needs to be called when turn cycle is at results so that is why no !isCanvasDisabled
+  const clearCanvas = useCallback(() => {
+    if (canvasRef.current) {
+      canvasRef.current.clearCanvas();
+    }
+  }, []);
+
   // For functions that other components / parent need
   useImperativeHandle(
     ref,
@@ -29,15 +36,8 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
         clearCanvas();
       },
     }),
-    []
+    [clearCanvas]
   );
-
-  // This clear canvas is passed upward to the game.tsx, it needs to be called when turn cycle is at results so that is why no !isCanvasDisabled
-  const clearCanvas = () => {
-    if (canvasRef.current) {
-      canvasRef.current.clearCanvas();
-    }
-  };
 
   // This clear canvas is used for the red trash button
   const onTrashClick = () => {
