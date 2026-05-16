@@ -1,8 +1,7 @@
 name: Supabase Keep-Alive Ping
 on:
   schedule:
-    # Runs at 00:00 UTC every Sunday, Wednesday, and Friday
-    - cron: "0 0 * * 0,3,5"
+    - cron: "0 0 * * *" # daily, drop the 3x/week one
   workflow_dispatch:
 
 jobs:
@@ -14,6 +13,11 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
         run: |
-          curl -f -X GET "$NEXT_PUBLIC_SUPABASE_URL/rest/v1/supabase_ping?select=id&limit=1" \
-          -H "apikey: $NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" \
-          -H "Authorization: Bearer $NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
+          set -euo pipefail
+          curl --fail-with-body --show-error --silent \
+            -X POST "$NEXT_PUBLIC_SUPABASE_URL/rest/v1/supabase_ping?on_conflict=id" \
+            -H "apikey: $NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" \
+            -H "Authorization: Bearer $NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" \
+            -H "Content-Type: application/json" \
+            -H "Prefer: resolution=merge-duplicates,return=representation" \
+            --data "{\"id\":1,\"last_ping\":\"$(date -u +%FT%TZ)\"}"
