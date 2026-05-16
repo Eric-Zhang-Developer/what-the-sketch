@@ -117,7 +117,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
             height="60vh"
             strokeWidth={4}
             strokeColor={isDark ? "#f4f4f5" : "#09090b"} // zinc-100 : zinc-950
-            canvasColor={isDark ? "#18181b" : "#f4f4f5"} // zinc-900 : zinc-100
+            canvasColor={isDark ? "#1e1e1e" : "#f4f4f5"} // dark grey : zinc-100
             ref={canvasRef}
           ></ReactSketchCanvas>
         </div>
