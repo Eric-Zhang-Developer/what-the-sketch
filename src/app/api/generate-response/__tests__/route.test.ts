@@ -42,7 +42,44 @@ describe("POST /api/generate-response", () => {
         expect(response.status).toBe(200);
         expect(json.response).toBe(AIAnswer);
       });
+
+      it("uses the selected AI personality prompt", async () => {
+        const request = new NextRequest("http://localhost/api/generate-response", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image: "SomeBase64data", aiPersonality: "Caveman" }),
+        });
+        const response = await POST(request);
+        const json = await response.json();
+        const openRouterPayload = mockSend.mock.calls[0][0];
+        const textContent = openRouterPayload.messages[0].content[0].text;
+
+        expect(response.status).toBe(200);
+        expect(json.response).toBe(AIAnswer);
+        expect(textContent).toContain("Grug");
+        expect(textContent).toContain("My guess is **WORD**");
+      });
     });
+
+    describe("and AI personality is invalid", () => {
+      it("returns 400", async () => {
+        const request = new NextRequest("http://localhost/api/generate-response", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            image: "SomeBase64data",
+            aiPersonality: "Wizard Accountant",
+          }),
+        });
+        const response = await POST(request);
+        const json = await response.json();
+
+        expect(response.status).toBe(400);
+        expect(json.error).toBe("Invalid request");
+        expect(OpenRouter).not.toHaveBeenCalled();
+      });
+    });
+
     describe("and request is empty", () => {
       it("returns 400", async () => {
         const request = new NextRequest("http://localhost/api/generate-response", {

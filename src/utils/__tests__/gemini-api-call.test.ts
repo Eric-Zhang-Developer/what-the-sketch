@@ -7,10 +7,21 @@ describe("Gemini API Call Function Tests", () => {
   });
   describe("Happy Path / Success", () => {
     it("should return the response data when API works", async () => {
-      vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
         new Response(JSON.stringify({ response: "It's a cat!" }), { status: 200 })
       );
-      const result = await GeminiAPICall("fake-base64-data");
+      const result = await GeminiAPICall("fake-base64-data", "Caveman");
+
+      expect(fetchSpy).toHaveBeenCalledWith(
+        "/api/generate-response",
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({
+            image: "fake-base64-data",
+            aiPersonality: "Caveman",
+          }),
+        })
+      );
       expect(result).toEqual({ success: true, data: { response: "It's a cat!" } });
     });
   });
@@ -22,19 +33,19 @@ describe("Gemini API Call Function Tests", () => {
           status: 429,
         })
       );
-      const result = await GeminiAPICall("fake-base64-data");
+      const result = await GeminiAPICall("fake-base64-data", "Default");
       expect(result).toEqual({ success: false, error: "You have exceeded your daily limit." });
     });
 
     it("should return an error when network fails / JSON is failed to parse", async () => {
       vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("Failed to Fetch"));
-      const result = await GeminiAPICall("fake-base64-data");
+      const result = await GeminiAPICall("fake-base64-data", "Default");
       expect(result).toEqual({ success: false, error: "Failed to Fetch" });
     });
 
     it("should handle non Error throws gracefully", async () => {
       vi.spyOn(globalThis, "fetch").mockRejectedValue(67);
-      const result = await GeminiAPICall("fake-base64-data");
+      const result = await GeminiAPICall("fake-base64-data", "Default");
       expect(result).toEqual({ success: false, error: "An unexpected error occurred" });
     });
   });

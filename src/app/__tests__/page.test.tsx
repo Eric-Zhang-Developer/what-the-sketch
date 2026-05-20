@@ -1,4 +1,4 @@
-import { describe, expect, it, afterEach, vi, beforeAll } from "vitest";
+import { describe, expect, it, afterEach, vi, beforeAll, beforeEach } from "vitest";
 import Home from "../page";
 import { render, screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -34,6 +34,11 @@ const mockCanvasControls = {
   clearCanvas: vi.fn(),
 };
 
+beforeEach(() => {
+  vi.clearAllMocks();
+  mockCanvasControls.exportImage.mockResolvedValue("data:image/png;base64,MOCK");
+});
+
 vi.mock("react-sketch-canvas", async () => {
   const React = await import("react");
   const ReactSketchCanvas = React.forwardRef(function MockReactSketchCanvas(props: never, ref) {
@@ -68,6 +73,23 @@ describe("Lobby Tests", () => {
 
     expect(title).not.toBeInTheDocument();
     expect(startGameButton).not.toBeInTheDocument();
+  });
+
+  it("should let the user select an AI personality", async () => {
+    render(<Home></Home>);
+    const user = userEvent.setup();
+
+    const aiPersonalityButton = screen.getByRole("button", {
+      name: /AI Personality: Default/,
+    });
+    await user.click(aiPersonalityButton);
+    await user.click(screen.getByText("Caveman"));
+
+    expect(
+      screen.getByRole("button", {
+        name: /AI Personality: Caveman/,
+      })
+    ).toBeInTheDocument();
   });
 });
 
@@ -107,6 +129,34 @@ describe("Core Game Tests", () => {
 
     expect(resultSection).toBeInTheDocument();
     expect(nextPromptButton).toBeInTheDocument();
+  });
+
+  it("should send the selected AI personality when submitting a drawing", async () => {
+    render(<Home></Home>);
+    const user = userEvent.setup();
+
+    await user.click(
+      screen.getByRole("button", {
+        name: /AI Personality: Default/,
+      })
+    );
+    await user.click(screen.getByText("Caveman"));
+    await user.click(screen.getByText("Start Game!"));
+
+    const submitButton = await screen.findByText("Submit Drawing");
+    await user.click(submitButton);
+
+    await screen.findByTestId("turn-result-section");
+
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      "/api/generate-response",
+      expect.objectContaining({
+        body: JSON.stringify({
+          image: "MOCK",
+          aiPersonality: "Caveman",
+        }),
+      })
+    );
   });
 
   it("should not display the results section after the user clicks next prompt", async () => {
