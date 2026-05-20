@@ -1,11 +1,14 @@
-import { ApiResult } from "./types";
+import { AIPersonality, ApiResult } from "./types";
 
-export default async function GeminiAPICall(rawBase64Data: string): Promise<ApiResult> {
+export default async function GeminiAPICall(
+  rawBase64Data: string,
+  aiPersonality: AIPersonality,
+): Promise<ApiResult> {
   try {
     const response = await fetch("/api/generate-response", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image: rawBase64Data }),
+      body: JSON.stringify({ image: rawBase64Data, aiPersonality: aiPersonality }),
     });
 
     // HTTP error response

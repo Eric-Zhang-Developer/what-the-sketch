@@ -3,6 +3,8 @@ import { ipAddress } from "@vercel/functions";
 import { checkRateLimit } from "@/utils/check-rate-limit";
 import z from "zod";
 import { OpenRouter } from "@openrouter/sdk";
+import { AI_PERSONALITIES } from "@/utils/types";
+import { buildAIGuessPrompt } from "@/utils/ai-personality-prompts";
 
 export async function POST(request: NextRequest) {
   // --- IP rate limiting check ---
@@ -29,6 +31,7 @@ export async function POST(request: NextRequest) {
       .min(1, "Image data is required")
       .max(5_000_000, "Image exceeds size limit")
       .regex(base64Regex, "Invalid base64 format"),
+    aiPersonality: z.enum(AI_PERSONALITIES).default("Default"),
   });
   const result = requestSchema.safeParse(body);
   if (!result.success) {
@@ -38,8 +41,7 @@ export async function POST(request: NextRequest) {
 
   // --- OpenRouter API Call ---
   try {
-    // To-do: For future reference for changeable prompts also feed a textPrompt. variable to contents
-
+    const prompt = buildAIGuessPrompt(result.data.aiPersonality);
     const openRouter = new OpenRouter({
       apiKey: process.env.OPENROUTER_API_KEY!,
     });
@@ -52,9 +54,7 @@ export async function POST(request: NextRequest) {
           content: [
             {
               type: "text",
-              text: `You are an enthusiastic and slightly sassy AI game partner in a Pictionary-style game. Your goal is to analyze a user's drawing and guess what it is. 
-                    First, provide a playful, and slightly roasting commentary on the drawing's quality (keep it lighthearted and fun). 
-                    Then, you MUST end your response with your final guess in the following format, and nothing else after it: " My guess is **WORD**". `,
+              text: prompt,
             },
             {
               type: "image_url",

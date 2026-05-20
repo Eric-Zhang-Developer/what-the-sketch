@@ -18,6 +18,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
   const setErrorMessage = useGameStore((state) => state.setErrorMessage);
   const isEraseMode = useGameStore((state) => state.isEraseMode);
   const setEraseMode = useGameStore((state) => state.setEraseMode);
+  const aiPersonality = useGameStore((state) => state.aiPersonality);
 
   const isCanvasDisabled = turnCycleState !== TurnCycleState.Drawing;
 
@@ -36,7 +37,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
         clearCanvas();
       },
     }),
-    [clearCanvas]
+    [clearCanvas],
   );
 
   // This clear canvas is used for the red trash button
@@ -81,7 +82,7 @@ function Sketchpad(_: unknown, ref: Ref<SketchpadRef>) {
     const rawBase64Data = fullDataURI.split(",")[1];
 
     // API Call
-    const result = await GeminiAPICall(rawBase64Data);
+    const result = await GeminiAPICall(rawBase64Data, aiPersonality);
 
     if (result.success) {
       setResponse(result.data.response);
