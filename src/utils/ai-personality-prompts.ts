@@ -9,6 +9,7 @@ const BASE_GAME_INSTRUCTIONS = `
   If the drawing is clear, clever, or well-made, hype it up.
   If the drawing is rough, messy, or ambiguous, roast the drawing in a funny manner.
   Keep the response at 100 words or less.
+  Always use "\n\n" for new lines instead of "\n"
 
   You MUST end your response with exactly:
   My guess is **WORD**
