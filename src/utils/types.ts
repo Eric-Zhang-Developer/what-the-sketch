@@ -81,7 +81,18 @@ export const PROMPT_CATEGORIES = [
 
 export type PromptCategory = (typeof PROMPT_CATEGORIES)[number];
 
-export const AI_PERSONALITIES = ["Default", "Caveman", "Haiku Poet"] as const;
+export const AI_PERSONALITIES = [
+  "Default",
+  "Caveman",
+  "Haiku Poet",
+  "Pirate",
+  "Anon",
+  "Mr. President",
+  "Ork",
+  "Brainrotted Zoomer",
+  "Noir Detective",
+  "LinkedIn Lunatic",
+] as const;
 export type AIPersonality = (typeof AI_PERSONALITIES)[number];
 
 export interface RateLimitResult {
