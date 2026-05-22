@@ -65,16 +65,35 @@ export interface GameStore {
 
   promptCategory: PromptCategory;
   setPromptCategory: (newPromptCategory: PromptCategory) => void;
+
+  aiPersonality: AIPersonality;
+  setAiPersonality: (newAIPersonality: AIPersonality) => void;
 }
 
-export enum PromptCategory {
-  Default = "DEFAULT",
-  Objects = "OBJECTS",
-  Animals = "ANIMALS",
-  Nature = "NATURE",
-  Food = "FOOD",
-  Geography = "GEOGRAPHY",
-}
+export const PROMPT_CATEGORIES = [
+  "Default",
+  "Objects",
+  "Animals",
+  "Nature",
+  "Food",
+  "Geography",
+] as const;
+
+export type PromptCategory = (typeof PROMPT_CATEGORIES)[number];
+
+export const AI_PERSONALITIES = [
+  "Default",
+  "Caveman",
+  "Haiku Poet",
+  "Pirate",
+  "Anon",
+  "Mr. President",
+  "Ork",
+  "Brainrotted Zoomer",
+  "Noir Detective",
+  "LinkedIn Lunatic",
+] as const;
+export type AIPersonality = (typeof AI_PERSONALITIES)[number];
 
 export interface RateLimitResult {
   limited: boolean;

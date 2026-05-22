@@ -1,14 +1,30 @@
 import { create } from "zustand";
-import { GameState, GameStore, GuessState, PromptCategory, TurnCycleState } from "@/utils/types";
+import { GameState, GameStore, GuessState, TurnCycleState } from "@/utils/types";
 import { getRandomPrompt } from "@/utils/get-random-prompt";
 import { devtools } from "zustand/middleware";
 
-export const initialState = {
+type GameStoreState = Pick<
+  GameStore,
+  | "response"
+  | "guessState"
+  | "gameState"
+  | "turnCycleState"
+  | "promptCategory"
+  | "aiPersonality"
+  | "currentDrawingPrompt"
+  | "roundNumber"
+  | "correctGuesses"
+  | "errorMessage"
+  | "isEraseMode"
+>;
+
+export const initialState: GameStoreState = {
   response: "",
   guessState: GuessState.Pending,
   gameState: GameState.Lobby,
   turnCycleState: TurnCycleState.Drawing,
-  promptCategory: PromptCategory.Default,
+  promptCategory: "Default",
+  aiPersonality: "Default",
   currentDrawingPrompt: "",
   roundNumber: 1,
   correctGuesses: 0,
@@ -88,6 +104,10 @@ export const useGameStore = create<GameStore>()(
 
     setPromptCategory(newPromptCategory) {
       set({ promptCategory: newPromptCategory });
+    },
+
+    setAiPersonality(newAIPersonality) {
+      set({ aiPersonality: newAIPersonality });
     },
   }))
 );
