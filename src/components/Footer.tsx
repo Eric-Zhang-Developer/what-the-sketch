@@ -9,7 +9,7 @@ export default function Footer() {
         Privacy Policy
       </Link>
       <span className="hidden sm:inline">·</span>
-      <span>© 2026 What the Sketch?</span>
+      <span>© {new Date().getFullYear()} Eric Zhang · What the Sketch?</span>
     </footer>
   );
 }
