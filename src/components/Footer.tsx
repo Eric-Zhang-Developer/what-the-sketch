@@ -9,6 +9,10 @@ export default function Footer() {
         Privacy Policy
       </Link>
       <span className="hidden sm:inline">·</span>
+      <Link href="/terms" className="hover:text-black hover:underline transition-colors">
+        Terms of Service
+      </Link>
+      <span className="hidden sm:inline">·</span>
       <span>© {new Date().getFullYear()} Eric Zhang · What the Sketch?</span>
     </footer>
   );

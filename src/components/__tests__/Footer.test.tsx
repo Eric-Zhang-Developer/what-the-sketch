@@ -14,4 +14,11 @@ describe("Footer", () => {
     const privacyLink = screen.getByRole("link", { name: "Privacy Policy" });
     expect(privacyLink).toHaveAttribute("href", "/privacy");
   });
+
+  it("renders a link to the terms of service", () => {
+    render(<Footer />);
+
+    const termsLink = screen.getByRole("link", { name: "Terms of Service" });
+    expect(termsLink).toHaveAttribute("href", "/terms");
+  });
 });

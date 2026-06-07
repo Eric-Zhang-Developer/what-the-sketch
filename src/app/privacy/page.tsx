@@ -118,8 +118,8 @@ export default function PrivacyPage() {
         <h2 className="text-3xl text-black mt-2">Your rights</h2>
         <p>
           Depending on where you live, you may have rights to access or delete your personal data.
-          Because we hold so little — essentially a temporary counter tied to your IP address —
-          there is usually nothing personal to return or erase. If you have a request or question,
+          Because we hold so little, essentially a temporary counter tied to your IP address, there
+          is usually nothing personal to return or erase. If you have a request or question,
           contact us and we&apos;ll help.
         </p>
 
