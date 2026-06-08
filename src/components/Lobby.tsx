@@ -3,6 +3,7 @@ import { AI_PERSONALITIES, AIPersonality, PROMPT_CATEGORIES, PromptCategory } fr
 import Image from "next/image";
 import Button from "./Button";
 import DropDownList from "./DropDownList";
+import Footer from "./Footer";
 export default function Lobby() {
   const setPromptCategory = useGameStore((state) => state.setPromptCategory);
   const promptCategory = useGameStore((state) => state.promptCategory);
@@ -11,14 +12,14 @@ export default function Lobby() {
   const startGame = useGameStore((state) => state.startGame);
 
   return (
-    <main className="container mx-auto flex flex-col items-center gap-10 justify-center pt-20 px-4">
+    <main className="container mx-auto flex flex-col items-center gap-10 justify-center pt-20 px-4 min-h-screen">
       <Image
         aria-label="what-the-sketch-banner"
         src="/banner.webp"
         alt="What the Sketch? Banner"
         width={900}
         height={314}
-        className="w-full max-w-3xl h-auto"
+        className="w-full max-w-2xl h-auto"
         priority
       ></Image>
       <DropDownList
@@ -34,6 +35,7 @@ export default function Lobby() {
         onChange={(value: string) => setAiPersonality(value as AIPersonality)}
       ></DropDownList>
       <Button onClick={startGame}>Start Game!</Button>
+      <Footer />
     </main>
   );
 }
