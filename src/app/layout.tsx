@@ -3,7 +3,7 @@ import { Patrick_Hand } from "next/font/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AI Pictionary",
+  title: "What the Sketch?",
   description: "Guess that Picture!",
 };
 
