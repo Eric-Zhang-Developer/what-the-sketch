@@ -52,7 +52,7 @@ describe("POST /api/generate-response", () => {
         const response = await POST(request);
         const json = await response.json();
         const openRouterPayload = mockSend.mock.calls[0][0];
-        const textContent = openRouterPayload.messages[0].content[0].text;
+        const textContent = openRouterPayload.chatRequest.messages[0].content[0].text;
 
         expect(response.status).toBe(200);
         expect(json.response).toBe(AIAnswer);
