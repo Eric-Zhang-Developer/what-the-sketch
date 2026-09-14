@@ -5,9 +5,11 @@ const BASE_GAME_INSTRUCTIONS = `
 
   Analyze the user's drawing and make one best guess.
   React to the drawing's apparent clarity and quality honestly.
+  Do not use reasoning. 
 
   If the drawing is clear, clever, or well-made, hype it up.
   If the drawing is rough, messy, or ambiguous, roast the drawing in a funny manner.
+  Be maximally funny in your response 
   Keep the response at 100 words or less.
   Always use "\n\n" for new lines instead of "\n"
 

@@ -47,26 +47,36 @@ export async function POST(request: NextRequest) {
     });
 
     const response = await openRouter.chat.send({
-      model: "google/gemini-3-flash-preview",
-      messages: [
-        {
-          role: "user",
-          content: [
-            {
-              type: "text",
-              text: prompt,
-            },
-            {
-              type: "image_url",
-              imageUrl: {
-                url: image,
-              },
-            },
-          ],
+      chatRequest: {
+        model: "google/gemini-3.8-flash",
+        provider: {
+          order: ["google-ai-studio/flex"],
+          allowFallbacks: true,
         },
-      ],
-      stream: false,
+        reasoning: { effort: "low" },
+        messages: [
+          {
+            role: "user",
+            content: [
+              {
+                type: "text",
+                text: prompt,
+              },
+              {
+                type: "image_url",
+                imageUrl: {
+                  url: image,
+                },
+              },
+            ],
+          },
+        ],
+        stream: false,
+      },
     });
+    if (!("choices" in response)) {
+      throw new Error("Expected a non-streaming response");
+    }
 
     // Return only text for now all the metadata I don't want to expose to client side
     return NextResponse.json({ response: response.choices[0].message.content });
