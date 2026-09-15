@@ -4,6 +4,21 @@ Short log of choices that are not obvious from the code, so nobody (human or age
 without knowing the tradeoff. Newest first. Add an entry when you make a call that a future
 reader would question. Hashes are on `main`.
 
+## 2026-09-15: Plan streaming around a validated response contract (#106)
+
+Stream commentary first and reveal the complete guess only after successful final validation.
+Separate `commentary` and `guess` so display and scoring no longer interpret the same prose differently.
+Use plain-text commentary with preserved newlines and app-owned guess formatting: Markdown and
+model-specific line-break habits make the current output brittle. This trades inline Markdown styling
+for predictable legibility and incremental display. Structured output constrains shape, not humor or
+guess accuracy; provider support still needs verification and completed output still needs validation.
+
+Keep this focused on the existing submit-to-result flow. Implementation scope and acceptance criteria
+live in [#106](https://github.com/Eric-Zhang-Developer/what-the-sketch/issues/106). This is an agreed plan,
+not shipped behavior; it will supersede the closing-line and Markdown contracts below when implemented.
+Work collaboratively in small, explained steps; planning approval does not authorize autonomous
+implementation. The current setup task changes documentation only.
+
 ## 2026-09-03: No separate landing page; the lobby is the landing page
 Casual browser games convert on zero clicks between arrival and play (Wordle, Quick Draw, skribbl).
 Marketing content goes below the fold on the lobby, not on a separate route. Revisit only if

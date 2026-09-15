@@ -1,15 +1,23 @@
 # Roadmap
 
 Themes, not tasks. Individual work items are GitHub issues; this file says which ones matter and why.
-Last reviewed: 2026-09-03.
+Last reviewed: 2026-09-15 (response UX priority).
 
-Operating rule: **no new gameplay feature until analytics shows 50 distinct sessions.** Everything in
-"Later" waits behind that number.
+The owner reports 200 users and player feedback as of 2026-09-15. Prioritize improvements to the
+existing game based on that feedback; the earlier 50-session gate no longer blocks response UX work.
+"Later" remains deferred unless feedback justifies promoting an item.
 
-## Now: Launch
+## Now: Response UX
 
-The game has been live and playable since mid-2026 but has never been promoted. This milestone is
-the minimum needed to promote it and know whether anyone showed up.
+- **Streaming and response reliability.** Improve perceived responsiveness and legibility in the
+  submit-to-result experience ([#106](https://github.com/Eric-Zhang-Developer/what-the-sketch/issues/106)).
+  Coordinate the overlapping guess-check work with #74. Scope and acceptance criteria live in the issue;
+  rationale lives in DECISIONS.md. This is planned, not implemented.
+
+## Launch backlog
+
+The game has been live and playable since mid-2026. These earlier launch priorities remain a backlog;
+their completion status has not been re-audited for the response UX work.
 
 - **SEO and metadata.** Title/description/OG/Twitter, favicon (#100), robots, sitemap, canonical.
   Homepage currently exposes almost no crawlable text; add an h1, tagline, how-it-works, and the
