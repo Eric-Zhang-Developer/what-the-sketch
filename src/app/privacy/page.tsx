@@ -4,6 +4,9 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy Policy | What the Sketch?",
   description: "How What the Sketch? handles your drawings and data.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 const CONTACT_EMAIL = "ericzhangdeveloper@gmail.com";

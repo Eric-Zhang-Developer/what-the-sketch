@@ -4,6 +4,9 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Terms of Service | What the Sketch?",
   description: "The rules for playing What the Sketch?",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 const CONTACT_EMAIL = "ericzhangdeveloper@gmail.com";
