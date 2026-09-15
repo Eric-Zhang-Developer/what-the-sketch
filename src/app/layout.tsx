@@ -3,8 +3,21 @@ import { Patrick_Hand } from "next/font/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AI Pictionary",
-  description: "Guess that Picture!",
+  metadataBase: new URL("https://whatthesketch.io"),
+  title: "What the Sketch? — AI Drawing Game",
+  description:
+    "Draw a prompt and see if AI can guess your sketch. Play five rounds with different categories and AI personalities.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "What the Sketch?",
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 const patrickHand = Patrick_Hand({

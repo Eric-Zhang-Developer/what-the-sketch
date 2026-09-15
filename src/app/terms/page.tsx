@@ -4,6 +4,22 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Terms of Service | What the Sketch?",
   description: "The rules for playing What the Sketch?",
+  alternates: {
+    canonical: "/terms",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "What the Sketch?",
+    url: "/terms",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "What the Sketch? — You draw. AI guesses. Five rounds with your choice of AI personality.",
+      },
+    ],
+  },
 };
 
 const CONTACT_EMAIL = "ericzhangdeveloper@gmail.com";

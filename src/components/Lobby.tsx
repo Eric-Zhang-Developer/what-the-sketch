@@ -13,15 +13,22 @@ export default function Lobby() {
 
   return (
     <main className="container mx-auto flex flex-col items-center gap-10 justify-center pt-20 px-4 min-h-screen">
-      <Image
-        aria-label="what-the-sketch-banner"
-        src="/banner.webp"
-        alt="What the Sketch? Banner"
-        width={900}
-        height={314}
-        className="w-full max-w-2xl h-auto"
-        priority
-      ></Image>
+      <div className="flex w-full max-w-2xl flex-col items-center gap-4">
+        <h1 className="w-full">
+          <Image
+            src="/banner.webp"
+            alt="What the Sketch?"
+            width={900}
+            height={314}
+            className="w-full max-w-2xl h-auto"
+            priority
+          ></Image>
+        </h1>
+        <p className="text-2xl text-gray-900 text-center sm:mb-4 mb-2">
+          Draw a prompt and see if AI can guess your sketch
+        </p>
+      </div>
+
       <DropDownList
         options={PROMPT_CATEGORIES}
         displayText="Category: "
